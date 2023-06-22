@@ -1,5 +1,32 @@
-import { GlobalStyles as GStyles, useTheme } from '@mui/material';
+import {
+  Box,
+  Container,
+  GlobalStyles as GStyles,
+  useTheme
+} from '@mui/material';
 import { FC } from 'react';
+
+type Props = {
+  children: string | JSX.Element | JSX.Element[];
+};
+
+export const PageContainer: FC<Props> = ({ children }) => {
+  return (
+    <Container
+      maxWidth='lg'
+      component='section'
+      sx={{
+        display: 'flex',
+        justifyContent: 'center',
+        width: '100%',
+        height: '100%',
+        p: '2rem'
+      }}
+    >
+      {children}
+    </Container>
+  );
+};
 
 export const GlobalStyles: FC = () => {
   const theme = useTheme();
@@ -15,7 +42,6 @@ export const GlobalStyles: FC = () => {
         '#__next': {
           display: 'flex',
           flexDirection: 'column',
-          justifyContent: 'space-between',
           height: '100vh',
           background: theme.palette.background.default
         },

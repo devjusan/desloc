@@ -9,6 +9,7 @@ import createEmotionCache from '../lib/createEmotionCache';
 import Footer from '../components/core/footer';
 import { GlobalStyles } from '../css/global';
 import Header from '../components/core/header';
+import PagesMenu from '../components/core/pages-menu';
 
 const clientSideEmotionCache = createEmotionCache();
 
@@ -35,6 +36,7 @@ export default function MyApp(props: MyAppProps) {
         <CssBaseline />
         <GlobalStyles />
         <Header />
+        <PagesMenu />
         <Component {...pageProps} />
         <Footer />
       </ThemeProvider>

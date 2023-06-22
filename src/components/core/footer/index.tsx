@@ -12,7 +12,6 @@ const Footer: FC = () => {
     >
       <Container maxWidth='sm'>
         <Typography variant='body2' align='center'>
-          {'Copyright © '}
           <Link color='inherit' href='https://google.com/'>
             Todos os direitos reservados
           </Link>{' '}
