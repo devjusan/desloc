@@ -11,15 +11,18 @@ export const roboto = Roboto({
 const theme = createTheme({
     palette: {
         primary: {
-            main: '#556cd6',
+            main: 'rgb(239, 240, 235)',
         },
         secondary: {
-            main: '#19857b',
+            main: '#ffc709',
         },
         error: {
             main: red.A400,
         },
-
+        background: {
+            default: '#191919',
+            paper: '#1e1e1e'
+        }
     },
     typography: {
         fontFamily: roboto.style.fontFamily

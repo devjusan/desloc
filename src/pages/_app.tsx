@@ -6,6 +6,9 @@ import CssBaseline from '@mui/material/CssBaseline';
 import { CacheProvider, EmotionCache } from '@emotion/react';
 import theme from '../css/theme';
 import createEmotionCache from '../lib/createEmotionCache';
+import Footer from '../components/core/footer';
+import { GlobalStyles } from '../css/global';
+import Header from '../components/core/header';
 
 const clientSideEmotionCache = createEmotionCache();
 
@@ -30,7 +33,10 @@ export default function MyApp(props: MyAppProps) {
       </Head>
       <ThemeProvider theme={theme}>
         <CssBaseline />
+        <GlobalStyles />
+        <Header />
         <Component {...pageProps} />
+        <Footer />
       </ThemeProvider>
     </CacheProvider>
   );
