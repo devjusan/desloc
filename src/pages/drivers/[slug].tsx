@@ -8,7 +8,7 @@ import { FC } from 'react';
 const FCDriver: FC<{driver: Driver}> = ({driver: {
   catergoriaHabilitacao, nome, numeroHabilitacao, vencimentoHabilitacao
 }}) => {
-  return <PageContainer styles={{flexDirection: 'column', gap: '2rem',alignItems: 'center'}}>
+  return <PageContainer styles={{flexDirection: 'column', gap: '2rem', alignItems: 'center'}}>
     <h1>{nome}</h1>
     <p>{catergoriaHabilitacao}</p>
     <p>{numeroHabilitacao}</p>

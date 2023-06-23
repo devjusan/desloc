@@ -15,7 +15,6 @@ interface Response {
   error: boolean;
 }
 
-
 const Drivers: FC = () => {
   const router = useRouter();
   const { response, isLoading, error } = (useFetch(
