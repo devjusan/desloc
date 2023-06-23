@@ -6,6 +6,7 @@ const defaultConfig = {
         width: "400px",
         height: "75px",
     },
+    autoClose: 232323000,
 } as ToastOptions;
 
 const success = (message: string, options?: ToastOptions) =>

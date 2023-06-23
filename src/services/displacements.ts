@@ -17,8 +17,8 @@ const createDisplacement = async (displacement: Displacement): Promise<Displacem
     return response
 }
 
-const updateDisplacement = async (displacement: Displacement, id: string): Promise<Displacement> => {
-    const response: Promise<Displacement> = await fetchWrapper.put(`Deslocamento/${id}`, displacement)
+const updateDisplacement = async (displacement: Displacement, id: string): Promise<Response | undefined> => {
+    const response = await fetchWrapper.put(`Deslocamento/${id}`, displacement)
 
     return response
 }

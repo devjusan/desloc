@@ -17,8 +17,8 @@ const createVehicle = async (vehicle: Vehicle): Promise<Vehicle> => {
     return response
 }
 
-const updateVehicle = async (vehicle: Vehicle, id: string): Promise<Vehicle> => {
-    const response: Promise<Vehicle> = await fetchWrapper.put(`Veiculo/${id}`, vehicle)
+const updateVehicle = async (vehicle: Vehicle, id: string): Promise<Response | undefined> => {
+    const response = await fetchWrapper.put(`Veiculo/${id}`, vehicle)
 
     return response
 }

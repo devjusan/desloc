@@ -17,8 +17,8 @@ const createDriver = async (driver: Driver): Promise<Driver> => {
     return response
 }
 
-const updateDriver = async (driver: Driver, id: string): Promise<Driver> => {
-    const response: Promise<Driver> = await fetchWrapper.put(`Condutor/${id}`, driver)
+const updateDriver = async (driver: Driver, id: string): Promise<Response | undefined> => {
+    const response = await fetchWrapper.put(`Condutor/${id}`, driver)
 
     return response
 }

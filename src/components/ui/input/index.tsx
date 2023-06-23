@@ -5,7 +5,7 @@ const Input: <Variant extends TextFieldVariants>(
     variant?: Variant;
   } & Omit<TextFieldProps, 'variant'>
 ) => JSX.Element = ({ ...props }) => {
-  return <TextField {...props} />;
+  return <TextField {...props} margin='dense' fullWidth />;
 };
 
 export default Input;

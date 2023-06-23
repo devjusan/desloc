@@ -27,11 +27,6 @@ const Dialog: FC<DialogProps> = ({
     setOpen(false);
   };
 
-  const handleSubmit = () => {
-    cbOnSubscribe();
-    handleClose();
-  };
-
   const stylesOptions = () => {
     const styles = Object.assign(
       {},
@@ -66,19 +61,22 @@ const Dialog: FC<DialogProps> = ({
           {' '}
           {title}{' '}
         </DialogTitle>
+        <DialogContentText
+          sx={{
+            padding: '0 24px',
+            color: (theme) => theme.palette.secondary.light
+          }}
+        >
+          {description}
+        </DialogContentText>
         <DialogContent style={stylesOptions()}>
-          <DialogContentText
-            sx={{
-              color: (theme) => theme.palette.secondary.light
-            }}
-          >
-            {description}
-          </DialogContentText>
           <Box component='article'>{Content}</Box>
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>Cancelar</Button>
-          <Button onClick={handleSubmit}>Enviar</Button>
+          <Button onClick={cbOnSubscribe} variant='contained'>
+            Enviar
+          </Button>
         </DialogActions>
       </MUIDialog>
     </div>

@@ -17,8 +17,8 @@ const createClient = async (client: Client): Promise<Client> => {
     return response
 }
 
-const updateClient = async (client: Client, id: string): Promise<Client> => {
-    const response: Promise<Client> = await fetchWrapper.put(`Cliente/${id}`, client)
+const updateClient = async (client: Client, id: string): Promise<Response | undefined> => {
+    const response = await fetchWrapper.put(`Cliente/${id}`, client)
 
     return response
 }

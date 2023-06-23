@@ -11,13 +11,17 @@ function bindUrl(path: string) {
 }
 
 async function handleResponse(response: Response | void) {
-    const data = await response?.json?.();
+    try {
+        const data = await response?.json?.();
 
-    if (!response?.ok) {
-        return Promise.reject(new Error(data?.message || "Something went wrong"));
+        if (!response?.ok) {
+            return Promise.reject(new Error(data?.message || "Something went wrong"));
+        }
+
+        return data;
+    } catch (error) {
+        return Promise.reject(error);
     }
-
-    return data;
 }
 
 async function get(
@@ -79,7 +83,8 @@ async function put(url: string, body: unknown, options?: RequestInit,
     }
 
     const response = await fetch(bindUrl(url), requestOptions);
-    return handleResponse(response);
+
+    return response
 }
 
 async function del(url: string, options?: RequestInit,

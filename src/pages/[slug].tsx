@@ -1,12 +1,14 @@
 import { PageContainer } from '@/src/css/global';
-import { clientService } from '@/src/services';
+import { clientService, toastService } from '@/src/services';
 import { GetServerSideProps } from 'next';
-import { FC, useState } from 'react';
+import { ChangeEvent, FC, useEffect, useState } from 'react';
 import { Client } from '../types/clients';
 import Dialog from '../components/portals/dialog';
 import { PAGE_MESSAGES } from '../config/messages/pages';
-import { Button, TextField } from '@mui/material';
+import { Button } from '@mui/material';
 import Input from '../components/ui/input';
+import { messages } from '../config/messages/general';
+import { isEqual } from 'lodash';
 
 const FCClient: FC<{ client: Client }> = ({
   client: {
@@ -17,23 +19,55 @@ const FCClient: FC<{ client: Client }> = ({
     nome,
     numeroDocumento,
     tipoDocumento,
-    uf
+    uf,
+    id
   }
 }) => {
   const [open, setOpen] = useState(false);
+  const [form, setForm] = useState(Object.assign(
+    {},
+    {
+      bairro,
+      cidade,
+      logradouro,
+      numero,
+      nome,
+      numeroDocumento,
+      tipoDocumento,
+      uf,
+      id
+    }
+  ) as Client);
+  const formEntries = Object.entries(form);
+  const onChange = (
+    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+    key: keyof Client
+  ) => {
+    e.preventDefault();
 
-  const DialogContent = () => {
-    return (
-      <Input
-        autoFocus
-        margin='dense'
-        id='name'
-        label='Email Address'
-        type='email'
-        fullWidth
-        variant='standard'
-      />
-    );
+    setForm({ ...form, [key]: e.target.value });
+  };
+
+  const onSubmit = async () => {
+    const client = {
+      bairro,
+      cidade,
+      logradouro,
+      numero,
+      nome,
+      numeroDocumento,
+      tipoDocumento,
+      uf,
+      id
+    };
+
+    if (isEqual(client, form)) {
+      toastService.error(messages.clients.equal);
+      return;
+    }
+
+    await clientService.updateClient(form, id.toString());
+    setOpen(false);
   };
 
   return (
@@ -45,19 +79,32 @@ const FCClient: FC<{ client: Client }> = ({
         description={PAGE_MESSAGES.CLIENT.DIALOG.SUBTITLE}
         isOpen={open}
         setOpen={setOpen}
-        cbOnSubscribe={() => {}}
-        Content={<DialogContent />}
+        cbOnSubscribe={onSubmit}
+        Content={
+          <>
+            {formEntries.map(([key, value]) => (
+              <Input
+                key={key}
+                id={key}
+                label={key}
+                variant='standard'
+                value={value}
+                onChange={(e) => onChange(e, key as keyof Client)}
+              />
+            ))}
+          </>
+        }
         Trigger={() => <Button variant='contained'>Editar cliente</Button>}
       />
-      <h1>{nome}</h1>
+      <h1>{form.nome}</h1>
       <h2>
-        {tipoDocumento}: {numeroDocumento}
+        {form.tipoDocumento}: {form.numeroDocumento}
       </h2>
       <h2>
-        {logradouro}, {numero}
+        {form.logradouro}, {form.numero}
       </h2>
       <h2>
-        {bairro}, {cidade} - {uf}
+        {form.bairro}, {form.cidade} - {form.uf}
       </h2>
     </PageContainer>
   );

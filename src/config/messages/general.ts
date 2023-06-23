@@ -5,6 +5,7 @@ export const messages = {
     },
     clients: {
         error: 'Não foi possível carregar os clientes.',
+        equal: 'Os dados não foram alterados.',
     },
     vehicles: {
         error: 'Não foi possível carregar os veículos.',
