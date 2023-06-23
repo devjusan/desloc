@@ -23,6 +23,7 @@ export const PageContainer: FC<Props> = ({ children, styles }) => {
         width: '100%',
         height: '100%',
         p: '2rem',
+        overflowY: 'auto',
         ...styles
       }}
     >

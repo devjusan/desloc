@@ -22,11 +22,13 @@ const theme = createTheme({
         background: {
             default: '#191919',
             paper: '#1e1e1e'
-        }
+        },
+        divider: 'rgb(252, 201, 80)'
     },
     typography: {
         fontFamily: roboto.style.fontFamily
-    }
+    },
+
 });
 
 export default theme;
