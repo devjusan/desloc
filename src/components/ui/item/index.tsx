@@ -20,6 +20,7 @@ const Item: FC<IItem> = ({ cb, description, title, index }) => {
         alignItems: 'center',
         justifyContent: 'space-between',
         height: '85px',
+        minHeight: '85px',
         padding: '0 20px',
         borderRadius: '10px',
         cursor: 'pointer',

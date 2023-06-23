@@ -41,7 +41,33 @@ export const GlobalStyles: FC = () => {
         '*': {
           margin: 0,
           padding: 0,
-          boxSizing: 'border-box'
+          boxSizing: 'border-box',
+          scrollBehavior: 'smooth',
+          '*::-webkit-scrollbar': {
+            width: '6px',
+            height: '6px'
+          },
+
+          '*::-webkit-scrollbar-track': {
+            background: '#f1f1f1'
+          },
+
+          '*::-webkit-scrollbar-thumb': {
+            background: '#888',
+            borderRadius: '$full'
+          },
+
+          '*::-webkit-scrollbar-thumb:hover': {
+            background: '#999'
+          },
+
+          '::-moz-selection': {
+            background: 'rgba(255, 199, 9, 0.86)'
+          },
+
+          '::selection': {
+            background: ' rgba(255, 199, 9, 0.66)'
+          }
         },
         '#__next': {
           display: 'flex',
