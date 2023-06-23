@@ -1,6 +1,6 @@
 import { FC } from 'react';
 import Button from '@mui/material/Button';
-import Dialog from '@mui/material/Dialog';
+import MUIDialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
@@ -8,7 +8,7 @@ import DialogTitle from '@mui/material/DialogTitle';
 import { DialogProps } from '@/src/types/modal/dialog';
 import { Box } from '@mui/material';
 
-const FormDialog: FC<DialogProps> = ({
+const Dialog: FC<DialogProps> = ({
   setOpen,
   isOpen,
   Trigger,
@@ -16,7 +16,8 @@ const FormDialog: FC<DialogProps> = ({
   description,
   cbOnSubscribe,
   title,
-  height
+  height,
+  width
 }) => {
   const handleClickOpen = () => {
     setOpen(true);
@@ -31,22 +32,57 @@ const FormDialog: FC<DialogProps> = ({
     handleClose();
   };
 
+  const stylesOptions = () => {
+    const styles = Object.assign(
+      {},
+      {
+        minWidth: '100%',
+        minHeight: '100%'
+      }
+    );
+
+    if (height) {
+      styles.minHeight = height;
+    }
+
+    if (width) {
+      styles.minWidth = width;
+    }
+
+    return styles;
+  };
+
   return (
     <div>
-      <Trigger onClick={handleClickOpen} />
-      <Dialog open={isOpen} onClose={handleClose}>
-        <DialogTitle> {title} </DialogTitle>
-        <DialogContent>
-          <DialogContentText>{description}</DialogContentText>
+      <div onClick={handleClickOpen}>
+        <Trigger />
+      </div>
+      <MUIDialog open={isOpen} onClose={handleClose}>
+        <DialogTitle
+          sx={{
+            color: (theme) => theme.palette.secondary.main
+          }}
+        >
+          {' '}
+          {title}{' '}
+        </DialogTitle>
+        <DialogContent style={stylesOptions()}>
+          <DialogContentText
+            sx={{
+              color: (theme) => theme.palette.secondary.light
+            }}
+          >
+            {description}
+          </DialogContentText>
           <Box component='article'>{Content}</Box>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose}>Cancel</Button>
-          <Button onClick={handleSubmit}>Subscribe</Button>
+          <Button onClick={handleClose}>Cancelar</Button>
+          <Button onClick={handleSubmit}>Enviar</Button>
         </DialogActions>
-      </Dialog>
+      </MUIDialog>
     </div>
   );
 };
 
-export default FormDialog;
+export default Dialog;

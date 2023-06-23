@@ -18,6 +18,7 @@ export const PageContainer: FC<Props> = ({ children, styles }) => {
       maxWidth='lg'
       component='section'
       sx={{
+        position: 'relative',
         display: 'flex',
         justifyContent: 'center',
         width: '100%',
