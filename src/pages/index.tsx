@@ -2,8 +2,8 @@ import Head from 'next/head';
 import { PageContainer } from '../css/global';
 import useFetch from '../hooks/useFetch';
 import { toastService } from '../services';
-import { messages } from '../constants';
 import { CircularProgress } from '@mui/material';
+import { messages } from '../config/messages/general';
 
 export default function Clients() {
   const { response, isLoading, error } = useFetch('api/clients');

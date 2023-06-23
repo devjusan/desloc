@@ -1,4 +1,4 @@
-import { messages } from '@/src/constants';
+import { messages } from '@/src/config/messages/general';
 import { fetchWrapper } from '@/src/helpers/fetchWrapper';
 import { Vehicle } from '@/src/types/vehicles';
 import { NextApiRequest, NextApiResponse } from "next";
