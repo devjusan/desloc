@@ -3,14 +3,14 @@ import { messages } from '@/src/config/messages/general';
 import { PageContainer } from '@/src/css/global';
 import useFetch from '@/src/hooks/useFetch';
 import { toastService } from '@/src/services';
-import { Driver } from '@/src/types/drivers';
+import { Vehicle } from '@/src/types/vehicles';
 import { CircularProgress } from '@mui/material';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { FC } from 'react';
 
 interface Response {
-  response: { drivers: Driver[] };
+  response: { vehicles: Vehicle[] };
   isLoading: boolean;
   error: boolean;
 }
@@ -18,7 +18,7 @@ interface Response {
 const Vehicles: FC = () => {
   const router = useRouter();
   const { response, isLoading, error } = (useFetch(
-    'api/drivers'
+    'api/vehicles'
   ) as unknown) as Response;
 
   if (error) {
@@ -42,15 +42,15 @@ const Vehicles: FC = () => {
         flexDirection: 'column',
         justifyContent: 'flex-start',
       }}>
-        {response?.drivers.map(({ id, nome, numeroHabilitacao }, index) => {
+        {response?.vehicles.map(({ id,placa, marcaModelo }, index) => {
           return (
             <Item
               key={id}
               cb={() => {
                 router.push(`/vehicles/${id}`);
               }}
-              description={numeroHabilitacao}
-              title={nome}
+              description={marcaModelo}
+              title={placa}
               index={index}
             />
           );
