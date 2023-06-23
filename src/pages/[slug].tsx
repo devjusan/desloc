@@ -6,6 +6,7 @@ import { Client } from '../types/clients';
 import Dialog from '../components/portals/dialog';
 import { PAGE_MESSAGES } from '../config/messages/pages';
 import { Button, TextField } from '@mui/material';
+import Input from '../components/ui/input';
 
 const FCClient: FC<{ client: Client }> = ({
   client: {
@@ -20,9 +21,10 @@ const FCClient: FC<{ client: Client }> = ({
   }
 }) => {
   const [open, setOpen] = useState(false);
+
   const DialogContent = () => {
     return (
-      <TextField
+      <Input
         autoFocus
         margin='dense'
         id='name'

@@ -41,6 +41,22 @@ const theme = createTheme({
                     overflowY: 'auto',
                 }
             }
+        },
+        MuiTextField: {
+            styleOverrides: {
+                root: {
+                    color: 'white',
+                    '& label': {
+                        color: 'rgba(255, 255, 255, 0.7)',
+                    },
+                    '& .MuiInputBase-root::before': {
+                        borderBottom: '1px solid rgba(255, 255, 255, 0.7)',
+                    },
+                    '& .MuiInputBase-root input': {
+                        color: 'white',
+                    },
+                }
+            }
         }
     }
 });
