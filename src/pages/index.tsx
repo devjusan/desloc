@@ -13,7 +13,11 @@ export default function Clients() {
   }
 
   if (isLoading || error) {
-    return <CircularProgress />;
+    return (
+      <PageContainer styles={{ alignItems: 'center' }}>
+        <CircularProgress />
+      </PageContainer>
+    );
   }
 
   return (

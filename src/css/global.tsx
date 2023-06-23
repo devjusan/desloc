@@ -1,16 +1,18 @@
 import {
-  Box,
   Container,
   GlobalStyles as GStyles,
+  SxProps,
+  Theme,
   useTheme
 } from '@mui/material';
 import { FC } from 'react';
 
 type Props = {
   children: string | JSX.Element | JSX.Element[];
+  styles?: SxProps<Theme>;
 };
 
-export const PageContainer: FC<Props> = ({ children }) => {
+export const PageContainer: FC<Props> = ({ children, styles }) => {
   return (
     <Container
       maxWidth='lg'
@@ -20,7 +22,8 @@ export const PageContainer: FC<Props> = ({ children }) => {
         justifyContent: 'center',
         width: '100%',
         height: '100%',
-        p: '2rem'
+        p: '2rem',
+        ...styles
       }}
     >
       {children}
