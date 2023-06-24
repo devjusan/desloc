@@ -17,9 +17,9 @@ interface Response {
 
 const Drivers: FC = () => {
   const router = useRouter();
-  const { response, isLoading, error } = (useFetch(
+  const { response, isLoading, error } = useFetch(
     'api/drivers'
-  ) as unknown) as Response;
+  ) as unknown as Response;
 
   if (error) {
     toastService.error(messages.error.default);
@@ -31,17 +31,20 @@ const Drivers: FC = () => {
         <CircularProgress />
       </PageContainer>
     );
-  }  
+  }
 
   return (
     <>
       <Head>
         <title>Condutores | Deslocamento</title>
       </Head>
-      <PageContainer styles={{
-        flexDirection: 'column',
-        justifyContent: 'flex-start',
-      }}>{response?.drivers.map(({ id, nome, numeroHabilitacao }, index) => {
+      <PageContainer
+        styles={{
+          flexDirection: 'column',
+          justifyContent: 'flex-start',
+        }}
+      >
+        {response?.drivers.map(({ id, nome, numeroHabilitacao }, index) => {
           return (
             <Item
               key={id}
@@ -53,7 +56,8 @@ const Drivers: FC = () => {
               index={index}
             />
           );
-        })}</PageContainer>
+        })}
+      </PageContainer>
     </>
   );
 };

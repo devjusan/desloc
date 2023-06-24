@@ -6,7 +6,7 @@ const Footer: FC = () => {
   return (
     <Box
       sx={{
-        p: 6
+        p: 6,
       }}
       component='footer'
     >

@@ -17,9 +17,9 @@ interface Response {
 
 const Vehicles: FC = () => {
   const router = useRouter();
-  const { response, isLoading, error } = (useFetch(
+  const { response, isLoading, error } = useFetch(
     'api/vehicles'
-  ) as unknown) as Response;
+  ) as unknown as Response;
 
   if (error) {
     toastService.error(messages.error.default);
@@ -31,18 +31,20 @@ const Vehicles: FC = () => {
         <CircularProgress />
       </PageContainer>
     );
-  }  
-  
+  }
+
   return (
     <>
       <Head>
         <title>Veículos | Deslocamento</title>
       </Head>
-      <PageContainer styles={{
-        flexDirection: 'column',
-        justifyContent: 'flex-start',
-      }}>
-        {response?.vehicles.map(({ id,placa, marcaModelo }, index) => {
+      <PageContainer
+        styles={{
+          flexDirection: 'column',
+          justifyContent: 'flex-start',
+        }}
+      >
+        {response?.vehicles.map(({ id, placa, marcaModelo }, index) => {
           return (
             <Item
               key={id}

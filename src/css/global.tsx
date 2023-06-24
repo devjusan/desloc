@@ -3,7 +3,7 @@ import {
   GlobalStyles as GStyles,
   SxProps,
   Theme,
-  useTheme
+  useTheme,
 } from '@mui/material';
 import { FC } from 'react';
 
@@ -25,7 +25,7 @@ export const PageContainer: FC<Props> = ({ children, styles }) => {
         height: '100%',
         p: '2rem',
         overflowY: 'auto',
-        ...styles
+        ...styles,
       }}
     >
       {children}
@@ -46,43 +46,43 @@ export const GlobalStyles: FC = () => {
           scrollBehavior: 'smooth',
           '*::-webkit-scrollbar': {
             width: '6px',
-            height: '6px'
+            height: '6px',
           },
 
           '*::-webkit-scrollbar-track': {
-            background: '#f1f1f1'
+            background: '#f1f1f1',
           },
 
           '*::-webkit-scrollbar-thumb': {
             background: '#888',
-            borderRadius: '$full'
+            borderRadius: '$full',
           },
 
           '*::-webkit-scrollbar-thumb:hover': {
-            background: '#999'
+            background: '#999',
           },
 
           '::-moz-selection': {
-            background: 'rgba(255, 199, 9, 0.86)'
+            background: 'rgba(255, 199, 9, 0.86)',
           },
 
           '::selection': {
-            background: ' rgba(255, 199, 9, 0.66)'
-          }
+            background: ' rgba(255, 199, 9, 0.66)',
+          },
         },
         '#__next': {
           display: 'flex',
           flexDirection: 'column',
           height: '100vh',
-          background: theme.palette.background.default
+          background: theme.palette.background.default,
         },
         'html, body': {
-          color: theme.palette.primary.main
+          color: theme.palette.primary.main,
         },
         a: {
           color: theme.palette.secondary.main,
-          textDecoration: 'none'
-        }
+          textDecoration: 'none',
+        },
       }}
     />
   );

@@ -10,7 +10,7 @@ const PagesMenu: FC = () => {
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
-        width: '100%'
+        width: '100%',
       }}
     >
       <Box
@@ -18,7 +18,7 @@ const PagesMenu: FC = () => {
           display: 'flex',
           justifyContent: 'space-around',
           width: '100%',
-          maxWidth: '600px'
+          maxWidth: '600px',
         }}
       >
         <Link href='/'>Clientes</Link>

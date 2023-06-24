@@ -9,13 +9,13 @@ const Header: FC = () => {
         padding: '1rem',
         '&:hover': {
           '& p': {
-            color: (theme) => theme.palette.primary.main
-          }
+            color: (theme) => theme.palette.primary.main,
+          },
         },
         '& p': {
           transition: 'all 0.3s ease-in-out',
-          cursor: 'pointer'
-        }
+          cursor: 'pointer',
+        },
       }}
       component='footer'
     >
@@ -23,7 +23,7 @@ const Header: FC = () => {
         sx={{
           fontSize: '1.5rem',
           color: (theme) => theme.palette.secondary.main,
-          fontWeight: 'bold'
+          fontWeight: 'bold',
         }}
       >
         Deslocamento

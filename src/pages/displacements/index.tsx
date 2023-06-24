@@ -17,9 +17,9 @@ interface Response {
 
 const Displacements: FC = () => {
   const router = useRouter();
-  const { response, isLoading, error } = (useFetch(
+  const { response, isLoading, error } = useFetch(
     'api/displacements'
-  ) as unknown) as Response;
+  ) as unknown as Response;
 
   if (error) {
     toastService.error(messages.error.default);
@@ -27,10 +27,12 @@ const Displacements: FC = () => {
 
   if (isLoading || error) {
     return (
-      <PageContainer styles={{
-        flexDirection: 'column',
-        justifyContent: 'flex-start',
-      }}>
+      <PageContainer
+        styles={{
+          flexDirection: 'column',
+          justifyContent: 'flex-start',
+        }}
+      >
         <CircularProgress />
       </PageContainer>
     );
@@ -41,22 +43,28 @@ const Displacements: FC = () => {
       <Head>
         <title>Deslocamentos | Deslocamento</title>
       </Head>
-      <PageContainer styles={{
-        flexDirection: 'column',
-        justifyContent: 'flex-start',
-      }}>{response?.displacements.map(({ id, inicioDeslocamento, fimDeslocamento}, index) => {
-          return (
-            <Item
-              key={id}
-              cb={() => {
-                router.push(`/displacements/${id}`);
-              }}
-              description={fimDeslocamento?.toString() ?? 'Não finalizado'}
-              title={inicioDeslocamento?.toString() ?? 'Não iniciado'}
-              index={index}
-            />
-          );
-        })}</PageContainer>
+      <PageContainer
+        styles={{
+          flexDirection: 'column',
+          justifyContent: 'flex-start',
+        }}
+      >
+        {response?.displacements.map(
+          ({ id, inicioDeslocamento, fimDeslocamento }, index) => {
+            return (
+              <Item
+                key={id}
+                cb={() => {
+                  router.push(`/displacements/${id}`);
+                }}
+                description={fimDeslocamento?.toString() ?? 'Não finalizado'}
+                title={inicioDeslocamento?.toString() ?? 'Não iniciado'}
+                index={index}
+              />
+            );
+          }
+        )}
+      </PageContainer>
     </>
   );
 };

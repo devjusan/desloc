@@ -17,7 +17,7 @@ const Dialog: FC<DialogProps> = ({
   cbOnSubscribe,
   title,
   height,
-  width
+  width,
 }) => {
   const handleClickOpen = () => {
     setOpen(true);
@@ -32,7 +32,7 @@ const Dialog: FC<DialogProps> = ({
       {},
       {
         minWidth: '100%',
-        minHeight: '100%'
+        minHeight: '100%',
       }
     );
 
@@ -55,7 +55,7 @@ const Dialog: FC<DialogProps> = ({
       <MUIDialog open={isOpen} onClose={handleClose}>
         <DialogTitle
           sx={{
-            color: (theme) => theme.palette.secondary.main
+            color: (theme) => theme.palette.secondary.main,
           }}
         >
           {' '}
@@ -64,7 +64,7 @@ const Dialog: FC<DialogProps> = ({
         <DialogContentText
           sx={{
             padding: '0 24px',
-            color: (theme) => theme.palette.secondary.light
+            color: (theme) => theme.palette.secondary.light,
           }}
         >
           {description}

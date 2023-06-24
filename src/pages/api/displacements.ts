@@ -1,16 +1,20 @@
 import { messages } from '@/src/config/messages/general';
 import { fetchWrapper } from '@/src/helpers/fetchWrapper';
 import { Displacement } from '@/src/types/displacements';
-import { NextApiRequest, NextApiResponse } from "next";
+import { NextApiRequest, NextApiResponse } from 'next';
 
 async function displacements(req: NextApiRequest, res: NextApiResponse) {
-    try {
-        const displacements: Array<Displacement> = await fetchWrapper.get("Deslocamento");
+  try {
+    const displacements: Array<Displacement> = await fetchWrapper.get(
+      'Deslocamento'
+    );
 
-        res.send({ ok: true, displacements });
-    } catch (error) {
-        res.status(500).send({ ok: false, error, message: messages.displacements.error });
-    }
+    res.send({ ok: true, displacements });
+  } catch (error) {
+    res
+      .status(500)
+      .send({ ok: false, error, message: messages.displacements.error });
+  }
 }
 
-export default displacements
+export default displacements;

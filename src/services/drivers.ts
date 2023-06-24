@@ -1,33 +1,36 @@
-import { fetchWrapper } from '../helpers/fetchWrapper'
-import { Driver } from '../types/drivers'
+import { fetchWrapper } from '../helpers/fetchWrapper';
+import { Driver } from '../types/drivers';
 
 const getDriverById = async (id: string): Promise<Driver> => {
-    const response: Promise<Driver> = await fetchWrapper.get(`Condutor/${id}`)
+  const response: Promise<Driver> = await fetchWrapper.get(`Condutor/${id}`);
 
-    return response
-}
+  return response;
+};
 
 const deleteDriver = async (id: string): Promise<void> => {
-    await fetchWrapper.del(`Condutor/${id}`)
-}
+  await fetchWrapper.del(`Condutor/${id}`);
+};
 
 const createDriver = async (driver: Driver): Promise<Driver> => {
-    const response: Promise<Driver> = await fetchWrapper.post(`Condutor`, driver)
+  const response: Promise<Driver> = await fetchWrapper.post(`Condutor`, driver);
 
-    return response
-}
+  return response;
+};
 
-const updateDriver = async (driver: Driver, id: string): Promise<Response | undefined> => {
-    const response = await fetchWrapper.put(`Condutor/${id}`, driver)
+const updateDriver = async (
+  driver: Driver,
+  id: string
+): Promise<Response | undefined> => {
+  const response = await fetchWrapper.put(`Condutor/${id}`, driver);
 
-    return response
-}
+  return response;
+};
 
 const actions = {
-    getDriverById,
-    deleteDriver,
-    createDriver,
-    updateDriver
-}
+  getDriverById,
+  deleteDriver,
+  createDriver,
+  updateDriver,
+};
 
-export default actions
+export default actions;

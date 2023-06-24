@@ -26,7 +26,7 @@ const Item: FC<IItem> = ({ cb, description, title, index }) => {
         cursor: 'pointer',
 
         background: (theme) =>
-          !isEven ? theme.palette.background.default : theme.palette.divider
+          !isEven ? theme.palette.background.default : theme.palette.divider,
       }}
     >
       <Typography variant='h6'>{title}</Typography>

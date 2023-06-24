@@ -20,24 +20,26 @@ const FCClient: FC<{ client: Client }> = ({
     numeroDocumento,
     tipoDocumento,
     uf,
-    id
-  }
+    id,
+  },
 }) => {
   const [open, setOpen] = useState(false);
-  const [form, setForm] = useState(Object.assign(
-    {},
-    {
-      bairro,
-      cidade,
-      logradouro,
-      numero,
-      nome,
-      numeroDocumento,
-      tipoDocumento,
-      uf,
-      id
-    }
-  ) as Client);
+  const [form, setForm] = useState(
+    Object.assign(
+      {},
+      {
+        bairro,
+        cidade,
+        logradouro,
+        numero,
+        nome,
+        numeroDocumento,
+        tipoDocumento,
+        uf,
+        id,
+      }
+    ) as Client
+  );
   const formEntries = Object.entries(form);
   const onChange = (
     e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
@@ -58,7 +60,7 @@ const FCClient: FC<{ client: Client }> = ({
       numeroDocumento,
       tipoDocumento,
       uf,
-      id
+      id,
     };
 
     if (isEqual(client, form)) {
@@ -117,6 +119,6 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
   const client = await clientService.getClientById(slug);
 
   return {
-    props: { client }
+    props: { client },
   };
 };
