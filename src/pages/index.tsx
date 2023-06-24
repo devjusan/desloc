@@ -11,6 +11,7 @@ import { Client } from '../types/clients';
 import Input from '../components/ui/input';
 import Dialog from '../components/portals/dialog';
 import { clientInputs } from '../helpers/formInputs';
+import { PAGE_MESSAGES } from '../config/messages/pages';
 
 interface Response {
   response: { clients: Client[] };
@@ -71,8 +72,8 @@ const Clients: FC = () => {
         }}
       >
         <Dialog
-          title='Criar cliente'
-          description='Preencha os campos abaixo para criar um novo cliente'
+          title={PAGE_MESSAGES.CLIENT.DIALOG.CREATE.TITLE}
+          description={PAGE_MESSAGES.CLIENT.DIALOG.CREATE.SUBTITLE}
           isOpen={open}
           setOpen={setOpen}
           cbOnSubscribe={onSubmit}

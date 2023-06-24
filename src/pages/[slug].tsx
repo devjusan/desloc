@@ -77,8 +77,8 @@ const FCClient: FC<{ client: Client }> = ({
       styles={{ flexDirection: 'column', gap: '2rem', alignItems: 'center' }}
     >
       <Dialog
-        title={PAGE_MESSAGES.CLIENT.DIALOG.TITLE(form.nome)}
-        description={PAGE_MESSAGES.CLIENT.DIALOG.SUBTITLE}
+        title={PAGE_MESSAGES.CLIENT.DIALOG.EDIT.TITLE(form.nome)}
+        description={PAGE_MESSAGES.CLIENT.DIALOG.EDIT.SUBTITLE}
         isOpen={open}
         setOpen={setOpen}
         cbOnSubscribe={onSubmit}

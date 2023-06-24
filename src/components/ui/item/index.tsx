@@ -1,19 +1,22 @@
-import { Box, Typography } from '@mui/material';
-import { FC } from 'react';
+import { Box, Button, Typography } from '@mui/material';
+import { FC, useState } from 'react';
+import Dialog from '../../portals/dialog';
+import { PAGE_MESSAGES } from '@/src/config/messages/pages';
 
 interface IItem {
   title: string;
   description: string;
   index: number;
   cb: () => void;
+  cbOnDelete?: () => void;
 }
 
-const Item: FC<IItem> = ({ cb, description, title, index }) => {
+const Item: FC<IItem> = ({ cb, description, title, cbOnDelete, index }) => {
+  const [open, setOpen] = useState(false);
   const isEven = index % 2 === 0;
 
   return (
     <Box
-      onClick={cb}
       sx={{
         display: 'flex',
         flexDirection: 'row',
@@ -29,8 +32,29 @@ const Item: FC<IItem> = ({ cb, description, title, index }) => {
           !isEven ? theme.palette.background.default : theme.palette.divider,
       }}
     >
-      <Typography variant='h6'>{title}</Typography>
-      <Typography variant='body1'>{description}</Typography>
+      <Box onClick={cb} component='div'>
+        <Typography variant='h6'>{title}</Typography>
+        <Typography variant='body1'>{description}</Typography>
+      </Box>
+
+      <Dialog
+        title={PAGE_MESSAGES.CLIENT.DIALOG.DELETE.TITLE(title)}
+        description={PAGE_MESSAGES.CLIENT.DIALOG.DELETE.SUBTITLE}
+        isOpen={open}
+        setOpen={setOpen}
+        cbOnSubscribe={cbOnDelete || (() => {})}
+        Content={<div> </div>}
+        Trigger={() => (
+          <Button
+            sx={{
+              my: '2rem',
+            }}
+            variant='contained'
+          >
+            Excluir
+          </Button>
+        )}
+      />
     </Box>
   );
 };
