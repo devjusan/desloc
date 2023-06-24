@@ -1,15 +1,16 @@
 import Head from 'next/head';
 import { PageContainer } from '../css/global';
 import useFetch from '../hooks/useFetch';
-import { toastService } from '../services';
+import { clientService, toastService } from '../services';
 import { Button, CircularProgress } from '@mui/material';
 import { messages } from '../config/messages/general';
 import Item from '../components/ui/item';
 import { useRouter } from 'next/router';
-import { FC, useState } from 'react';
+import { ChangeEvent, FC, useState } from 'react';
 import { Client } from '../types/clients';
 import Input from '../components/ui/input';
 import Dialog from '../components/portals/dialog';
+import { clientInputs } from '../helpers/formInputs';
 
 interface Response {
   response: { clients: Client[] };
@@ -18,12 +19,14 @@ interface Response {
 }
 
 const Clients: FC = () => {
+  const inputs = clientInputs();
+  const [form, setForm] = useState(Object.assign({}, inputs) as Client);
   const [open, setOpen] = useState(false);
   const router = useRouter();
   const { response, isLoading, error } = useFetch(
     'api/clients'
   ) as unknown as Response;
-  const clientsEntries = Object.entries(response?.clients[0] || ({} as Client));
+  const clientsEntries = Object.entries(inputs);
 
   if (error) {
     toastService.error(messages.error.default);
@@ -36,6 +39,22 @@ const Clients: FC = () => {
       </PageContainer>
     );
   }
+
+  const onChange = (
+    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+    key: keyof Client
+  ) => {
+    e.preventDefault();
+
+    setForm({ ...form, [key]: e.target.value });
+  };
+
+  const onSubmit = async () => {
+    await clientService.createClient(form);
+    setOpen(false);
+
+    router.reload();
+  };
 
   return (
     <>
@@ -56,17 +75,16 @@ const Clients: FC = () => {
           description='Preencha os campos abaixo para criar um novo cliente'
           isOpen={open}
           setOpen={setOpen}
-          cbOnSubscribe={() => {}}
+          cbOnSubscribe={onSubmit}
           Content={
             <>
-              {clientsEntries.map(([key, value]) => (
+              {clientsEntries.map(([key]) => (
                 <Input
                   key={key}
                   id={key}
                   label={key}
                   variant='standard'
-                  value={value}
-                  onChange={() => {}}
+                  onChange={(e) => onChange(e, key as keyof Client)}
                 />
               ))}
             </>
