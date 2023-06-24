@@ -34,14 +34,14 @@ const Dialog: FC<DialogProps> = ({
         minWidth: '100%',
         minHeight: '100%',
       }
-    );
+    ) as { [key: string]: string };
 
     if (height) {
-      styles.minHeight = height;
+      styles.height = height;
     }
 
     if (width) {
-      styles.minWidth = width;
+      styles.width = width;
     }
 
     return styles;

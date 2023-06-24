@@ -54,6 +54,7 @@ const Item: FC<IItem> = ({ cb, description, title, cbOnDelete, index }) => {
             Excluir
           </Button>
         )}
+        height='20px'
       />
     </Box>
   );
