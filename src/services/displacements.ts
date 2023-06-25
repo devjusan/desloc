@@ -19,7 +19,7 @@ const createDisplacement = async (
   displacement: Displacement
 ): Promise<Displacement> => {
   const response: Promise<Displacement> = await fetchWrapper.post(
-    `Deslocamento`,
+    `Deslocamento/IniciarDeslocamento`,
     displacement
   );
 

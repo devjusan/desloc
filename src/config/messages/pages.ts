@@ -47,4 +47,20 @@ export const PAGE_MESSAGES = {
       },
     },
   },
+  DISPLACEMENT: {
+    DIALOG: {
+      EDIT: {
+        TITLE: (name: string) => `Deslocamento ${name}`,
+        SUBTITLE: 'Edite as informações do deslocamento',
+      },
+      CREATE: {
+        TITLE: 'Novo deslocamento',
+        SUBTITLE: 'Informe os dados do deslocamento',
+      },
+      DELETE: {
+        TITLE: (name: string) => `Excluir deslocamento ${name}`,
+        SUBTITLE: 'Tem certeza que deseja excluir este deslocamento?',
+      },
+    },
+  },
 };
