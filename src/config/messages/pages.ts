@@ -31,4 +31,20 @@ export const PAGE_MESSAGES = {
       },
     },
   },
+  VEHICLE: {
+    DIALOG: {
+      EDIT: {
+        TITLE: (name: string) => `Veículo ${name}`,
+        SUBTITLE: 'Edite as informações do veículo',
+      },
+      CREATE: {
+        TITLE: 'Novo veículo',
+        SUBTITLE: 'Informe os dados do veículo',
+      },
+      DELETE: {
+        TITLE: (name: string) => `Excluir veículo ${name}`,
+        SUBTITLE: 'Tem certeza que deseja excluir este veículo?',
+      },
+    },
+  },
 };

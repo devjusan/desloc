@@ -23,8 +23,8 @@ const PagesMenu: FC = () => {
       >
         <Link href='/'>Clientes</Link>
         <Link href='/drivers'>Condutores</Link>
-        <Link href='/displacements'>Deslocamentos</Link>
         <Link href='/vehicles'>Veículos</Link>
+        <Link href='/displacements'>Deslocamentos</Link>
       </Box>
     </Box>
   );

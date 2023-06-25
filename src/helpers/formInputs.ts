@@ -1,5 +1,6 @@
 import { Client } from '../types/clients';
 import { Driver } from '../types/drivers';
+import { Vehicle } from '../types/vehicles';
 
 export const clientInputs = (): Client => {
   return {
@@ -21,4 +22,13 @@ export const driverInputs = (): Driver => {
     numeroHabilitacao: '',
     vencimentoHabilitacao: new Date(),
   } as Driver;
+};
+
+export const vehicleInputs = (): Vehicle => {
+  return {
+    anoFabricacao: 0,
+    kmAtual: 0,
+    marcaModelo: '',
+    placa: '',
+  } as Vehicle;
 };

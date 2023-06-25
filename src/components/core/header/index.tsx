@@ -1,5 +1,4 @@
-import { Box, Container, Typography } from '@mui/material';
-import Link from 'next/link';
+import { Box, Typography } from '@mui/material';
 import { FC } from 'react';
 
 const Header: FC = () => {
