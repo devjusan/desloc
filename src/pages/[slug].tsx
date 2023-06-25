@@ -10,36 +10,9 @@ import Input from '../components/ui/input';
 import { messages } from '../config/messages/general';
 import { isEqual } from 'lodash';
 
-const FCClient: FC<{ client: Client }> = ({
-  client: {
-    bairro,
-    cidade,
-    logradouro,
-    numero,
-    nome,
-    numeroDocumento,
-    tipoDocumento,
-    uf,
-    id,
-  },
-}) => {
+const FCClient: FC<{ client: Client }> = ({ client }) => {
   const [open, setOpen] = useState(false);
-  const [form, setForm] = useState(
-    Object.assign(
-      {},
-      {
-        bairro,
-        cidade,
-        logradouro,
-        numero,
-        nome,
-        numeroDocumento,
-        tipoDocumento,
-        uf,
-        id,
-      }
-    ) as Client
-  );
+  const [form, setForm] = useState(Object.assign({}, { ...client }) as Client);
   const formEntries = Object.entries(form);
   const onChange = (
     e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
@@ -51,24 +24,14 @@ const FCClient: FC<{ client: Client }> = ({
   };
 
   const onSubmit = async () => {
-    const client = {
-      bairro,
-      cidade,
-      logradouro,
-      numero,
-      nome,
-      numeroDocumento,
-      tipoDocumento,
-      uf,
-      id,
-    };
+    const data = { ...client };
 
-    if (isEqual(client, form)) {
+    if (isEqual(data, form)) {
       toastService.error(messages.clients.equal);
       return;
     }
 
-    await clientService.updateClient(form, id.toString());
+    await clientService.updateClient(form, data.id.toString());
     setOpen(false);
   };
 
@@ -88,6 +51,7 @@ const FCClient: FC<{ client: Client }> = ({
               <Input
                 key={key}
                 id={key}
+                disabled={key === 'id'}
                 label={key}
                 variant='standard'
                 value={value}
