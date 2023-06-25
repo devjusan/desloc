@@ -15,5 +15,6 @@ export const messages = {
   },
   drivers: {
     error: 'Não foi possível carregar os motoristas.',
+    equal: 'Os dados não foram alterados.',
   },
 };
