@@ -27,17 +27,22 @@ const FCDriver: FC<{ driver: Driver }> = ({ driver }) => {
   };
 
   const onSubmit = async () => {
-    const data = { ...driver };
+    try {
+      const data = { ...driver };
 
-    if (isEqual(data, form)) {
-      toastService.error(messages.drivers.equal);
-      return;
+      if (isEqual(data, form)) {
+        toastService.error(messages.drivers.equal);
+        return;
+      }
+
+      await driversService.updateDriver(form, data.id?.toString() as string);
+      setOpen(false);
+
+      mutate('/api/drivers');
+    } catch (error) {
+      toastService.error(messages.error.default);
+      setOpen(false);
     }
-
-    await driversService.updateDriver(form, data.id.toString());
-    setOpen(false);
-
-    mutate('/api/drivers');
   };
 
   return (

@@ -1,23 +1,32 @@
+import Dialog from '@/src/components/portals/dialog';
+import Input from '@/src/components/ui/input';
 import Item from '@/src/components/ui/item';
 import { messages } from '@/src/config/messages/general';
+import { PAGE_MESSAGES } from '@/src/config/messages/pages';
 import { PageContainer } from '@/src/css/global';
+import { driverInputs } from '@/src/helpers/formInputs';
 import useFetch from '@/src/hooks/useFetch';
-import { toastService } from '@/src/services';
+import { driversService, toastService } from '@/src/services';
 import { Driver } from '@/src/types/drivers';
-import { CircularProgress } from '@mui/material';
+import { Button, CircularProgress } from '@mui/material';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
-import { FC } from 'react';
+import { ChangeEvent, FC, useState } from 'react';
 
 interface Response {
   response: { drivers: Driver[] };
   isLoading: boolean;
   error: boolean;
+  mutate: () => void;
 }
 
 const Drivers: FC = () => {
+  const inputs = driverInputs();
+  const driverEntries = Object.entries(inputs);
+  const [form, setForm] = useState(Object.assign({}, inputs) as Driver);
   const router = useRouter();
-  const { response, isLoading, error } = useFetch(
+  const [open, setOpen] = useState(false);
+  const { response, isLoading, error, mutate } = useFetch(
     'api/drivers'
   ) as unknown as Response;
 
@@ -33,6 +42,34 @@ const Drivers: FC = () => {
     );
   }
 
+  const onChange = (
+    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+    key: keyof Driver
+  ) => {
+    e.preventDefault();
+
+    setForm({ ...form, [key]: e.target.value });
+  };
+
+  const onSubmit = async () => {
+    try {
+      const { catergoriaHabilitacao, id, ...rest } = form;
+
+      await driversService.createDriver({
+        ...rest,
+        categoriaHabilitacao: catergoriaHabilitacao,
+      });
+      setOpen(false);
+
+      mutate();
+    } catch (error) {
+      toastService.error(messages.error.default);
+      setOpen(false);
+
+      console.error(error);
+    }
+  };
+
   return (
     <>
       <Head>
@@ -44,19 +81,53 @@ const Drivers: FC = () => {
           justifyContent: 'flex-start',
         }}
       >
-        {response?.drivers.map(({ id, nome, numeroHabilitacao }, index) => {
-          return (
-            <Item
-              key={id}
-              cb={() => {
-                router.push(`/drivers/${id}`);
+        <Dialog
+          title={PAGE_MESSAGES.DRIVER.DIALOG.CREATE.TITLE}
+          description={PAGE_MESSAGES.DRIVER.DIALOG.CREATE.SUBTITLE}
+          isOpen={open}
+          setOpen={setOpen}
+          cbOnSubscribe={onSubmit}
+          Content={
+            <>
+              {driverEntries.map(([key]) => (
+                <Input
+                  key={key}
+                  id={key}
+                  label={key === 'vencimentoHabilitacao' ? '' : key}
+                  variant='standard'
+                  type={key === 'vencimentoHabilitacao' ? 'date' : 'text'}
+                  onChange={(e) => onChange(e, key as keyof Driver)}
+                />
+              ))}
+            </>
+          }
+          Trigger={() => (
+            <Button
+              sx={{
+                my: '2rem',
               }}
-              description={numeroHabilitacao}
-              title={nome}
-              index={index}
-            />
-          );
-        })}
+              variant='contained'
+            >
+              Criar condutor
+            </Button>
+          )}
+        />
+
+        <>
+          {response?.drivers.map(({ id, nome, numeroHabilitacao }, index) => {
+            return (
+              <Item
+                key={id}
+                cb={() => {
+                  router.push(`/drivers/${id}`);
+                }}
+                description={numeroHabilitacao}
+                title={nome}
+                index={index}
+              />
+            );
+          })}
+        </>
       </PageContainer>
     </>
   );

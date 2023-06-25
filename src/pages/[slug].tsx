@@ -25,17 +25,22 @@ const FCClient: FC<{ client: Client }> = ({ client }) => {
   };
 
   const onSubmit = async () => {
-    const data = { ...client };
+    try {
+      const data = { ...client };
 
-    if (isEqual(data, form)) {
-      toastService.error(messages.clients.equal);
-      return;
+      if (isEqual(data, form)) {
+        toastService.error(messages.clients.equal);
+        return;
+      }
+
+      await clientService.updateClient(form, data.id.toString());
+      setOpen(false);
+
+      mutate('/api/clients');
+    } catch (error) {
+      toastService.error(messages.error.default);
+      setOpen(false);
     }
-
-    await clientService.updateClient(form, data.id.toString());
-    setOpen(false);
-
-    mutate('/api/clients');
   };
 
   return (

@@ -1,7 +1,8 @@
 export interface Driver {
-  id: number;
+  id?: number;
   nome: string;
   numeroHabilitacao: string;
-  catergoriaHabilitacao: string;
   vencimentoHabilitacao: Date;
+  catergoriaHabilitacao?: string;
+  categoriaHabilitacao?: string;
 }

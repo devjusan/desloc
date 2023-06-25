@@ -52,10 +52,15 @@ const Clients: FC = () => {
   };
 
   const onSubmit = async () => {
-    await clientService.createClient(form);
-    setOpen(false);
+    try {
+      await clientService.createClient(form);
+      setOpen(false);
 
-    mutate();
+      mutate();
+    } catch (error) {
+      toastService.error(messages.error.default);
+      setOpen(false);
+    }
   };
 
   return (
