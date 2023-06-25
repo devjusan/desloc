@@ -24,15 +24,21 @@ const Item: FC<IItem> = ({ cb, description, title, cbOnDelete, index }) => {
         justifyContent: 'space-between',
         height: '85px',
         minHeight: '85px',
-        padding: '0 20px',
         borderRadius: '10px',
         cursor: 'pointer',
-
+        paddingRight: '20px',
         background: (theme) =>
           !isEven ? theme.palette.background.default : theme.palette.divider,
       }}
     >
-      <Box onClick={cb} component='div'>
+      <Box
+        onClick={cb}
+        component='div'
+        style={{
+          width: '100%',
+          padding: '0 20px',
+        }}
+      >
         <Typography variant='h6'>{title}</Typography>
         <Typography variant='body1'>{description}</Typography>
       </Box>
