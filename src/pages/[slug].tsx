@@ -9,6 +9,7 @@ import { Button } from '@mui/material';
 import Input from '../components/ui/input';
 import { messages } from '../config/messages/general';
 import { isEqual } from 'lodash';
+import { mutate } from 'swr';
 
 const FCClient: FC<{ client: Client }> = ({ client }) => {
   const [open, setOpen] = useState(false);
@@ -33,6 +34,8 @@ const FCClient: FC<{ client: Client }> = ({ client }) => {
 
     await clientService.updateClient(form, data.id.toString());
     setOpen(false);
+
+    mutate('/api/clients');
   };
 
   return (
