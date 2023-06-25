@@ -17,6 +17,7 @@ interface Response {
   response: { clients: Client[] };
   isLoading: boolean;
   error: boolean;
+  mutate: () => void;
 }
 
 const Clients: FC = () => {
@@ -24,7 +25,7 @@ const Clients: FC = () => {
   const [form, setForm] = useState(Object.assign({}, inputs) as Client);
   const [open, setOpen] = useState(false);
   const router = useRouter();
-  const { response, isLoading, error } = useFetch(
+  const { response, isLoading, error, mutate } = useFetch(
     'api/clients'
   ) as unknown as Response;
   const clientsEntries = Object.entries(inputs);
@@ -54,7 +55,7 @@ const Clients: FC = () => {
     await clientService.createClient(form);
     setOpen(false);
 
-    router.reload();
+    mutate();
   };
 
   return (

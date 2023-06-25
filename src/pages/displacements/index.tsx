@@ -13,6 +13,7 @@ interface Response {
   response: { displacements: Displacement[] };
   isLoading: boolean;
   error: boolean;
+  mutate: () => void;
 }
 
 const Displacements: FC = () => {
