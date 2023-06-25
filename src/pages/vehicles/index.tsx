@@ -66,7 +66,9 @@ const Vehicles: FC = () => {
 
   const onDelete = async () => {
     try {
-      await vehicleService.deleteVehicle(form.id.toString());
+      await vehicleService.deleteVehicle(
+        response?.vehicles[0]?.id?.toString() as string
+      );
       mutate();
     } catch (error) {
       console.log(error);
