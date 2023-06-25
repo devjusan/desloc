@@ -16,7 +16,11 @@ import Input from '@/src/components/ui/input';
 import Dialog from '@/src/components/portals/dialog';
 import { PAGE_MESSAGES } from '@/src/config/messages/pages';
 import { displacementInputs } from '@/src/helpers/formInputs';
-import { handleType, isDisplacement } from '@/src/utils/form.utils';
+import {
+  handleType,
+  isDisplacement,
+  orderedDisplacementInput,
+} from '@/src/utils/form.utils';
 import { formatDate } from '@/src/utils/formatter.utils';
 
 interface Response {
@@ -28,7 +32,7 @@ interface Response {
 
 const Displacements: FC = () => {
   const inputs = displacementInputs();
-  const displacementEntries = Object.entries(inputs);
+  const { uniq, list } = orderedDisplacementInput();
   const [form, setForm] = useState(Object.assign({}, inputs) as Displacement);
   const [open, setOpen] = useState(false);
   const router = useRouter();
@@ -106,7 +110,7 @@ const Displacements: FC = () => {
           cbOnSubscribe={onSubmit}
           Content={
             <>
-              {displacementEntries.map(([key]) => (
+              {uniq.map((key) => (
                 <Input
                   key={key}
                   id={key}
