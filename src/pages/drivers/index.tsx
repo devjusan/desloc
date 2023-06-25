@@ -70,6 +70,17 @@ const Drivers: FC = () => {
     }
   };
 
+  const onDelete = async () => {
+    try {
+      await driversService.deleteDriver(
+        response?.drivers[0]?.id?.toString() as string
+      );
+      mutate();
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <>
       <Head>
@@ -124,6 +135,7 @@ const Drivers: FC = () => {
                 description={numeroHabilitacao}
                 title={nome}
                 index={index}
+                cbOnDelete={onDelete}
               />
             );
           })}

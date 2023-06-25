@@ -8,7 +8,7 @@ const getDriverById = async (id: string): Promise<Driver> => {
 };
 
 const deleteDriver = async (id: string): Promise<void> => {
-  await fetchWrapper.del(`Condutor/${id}`);
+  await fetchWrapper.del(`Condutor/${id}`, { body: JSON.stringify({ id }) });
 };
 
 const createDriver = async (driver: Driver): Promise<Driver> => {

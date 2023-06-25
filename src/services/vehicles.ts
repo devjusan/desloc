@@ -8,7 +8,9 @@ const getVehicleById = async (id: string): Promise<Vehicle> => {
 };
 
 const deleteVehicle = async (id: string): Promise<void> => {
-  await fetchWrapper.del(`Veiculo/${id}`);
+  await fetchWrapper.del(`Veiculo/${id}`, {
+    body: JSON.stringify({ id }),
+  });
 };
 
 const createVehicle = async (vehicle: Vehicle): Promise<Vehicle> => {

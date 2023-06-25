@@ -8,7 +8,9 @@ const getClientById = async (id: string): Promise<Client> => {
 };
 
 const deleteClient = async (id: string): Promise<void> => {
-  await fetchWrapper.del(`Cliente/${id}`);
+  await fetchWrapper.del(`Cliente/${id}`, {
+    body: JSON.stringify({ id }),
+  });
 };
 
 const createClient = async (client: Client): Promise<Client> => {

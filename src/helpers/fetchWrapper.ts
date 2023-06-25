@@ -79,6 +79,7 @@ async function del(url: string, options?: RequestInit) {
   const requestOptions = {
     method: 'DELETE',
     signal,
+    headers: { 'Content-Type': 'application/json' },
     ...options,
   } as RequestInit;
 
@@ -88,7 +89,7 @@ async function del(url: string, options?: RequestInit) {
 
   const response = await fetch(bindUrl(url), requestOptions);
 
-  return handleResponse(response);
+  return response;
 }
 
 export const fetchWrapper = {

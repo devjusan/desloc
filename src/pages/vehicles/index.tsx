@@ -64,6 +64,15 @@ const Vehicles: FC = () => {
     }
   };
 
+  const onDelete = async () => {
+    try {
+      await vehicleService.deleteVehicle(form.id.toString());
+      mutate();
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <>
       <Head>
@@ -116,6 +125,7 @@ const Vehicles: FC = () => {
                 }}
                 description={marcaModelo}
                 title={placa}
+                cbOnDelete={onDelete}
                 index={index}
               />
             );

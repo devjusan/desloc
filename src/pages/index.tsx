@@ -63,6 +63,18 @@ const Clients: FC = () => {
     }
   };
 
+  const onDelete = async () => {
+    try {
+      await clientService.deleteClient(
+        response?.clients[0]?.id?.toString() as string
+      );
+
+      mutate();
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <>
       <Head>
@@ -117,6 +129,7 @@ const Clients: FC = () => {
                 }}
                 description={cidade}
                 title={nome}
+                cbOnDelete={onDelete}
                 index={index}
               />
             );

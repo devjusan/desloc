@@ -10,7 +10,9 @@ const getDisplacementById = async (id: string): Promise<Displacement> => {
 };
 
 const deleteDisplacement = async (id: string): Promise<void> => {
-  await fetchWrapper.del(`Deslocamento/${id}`);
+  await fetchWrapper.del(`Deslocamento/${id}`, {
+    body: JSON.stringify({ id }),
+  });
 };
 
 const createDisplacement = async (
