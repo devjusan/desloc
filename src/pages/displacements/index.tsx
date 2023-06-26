@@ -3,15 +3,7 @@ import { ChangeEvent, FC, useState } from 'react';
 import { PageContainer } from '@/src/css/global';
 import { useRouter } from 'next/router';
 import useFetch from '@/src/hooks/useFetch';
-import {
-  Button,
-  CircularProgress,
-  FormControl,
-  InputLabel,
-  MenuItem,
-  Select,
-  SelectChangeEvent,
-} from '@mui/material';
+import { Button, CircularProgress, SelectChangeEvent } from '@mui/material';
 import { displacementService, toastService } from '@/src/services';
 import { messages } from '@/src/config/messages/general';
 import { Displacement } from '@/src/types/displacements';
@@ -26,9 +18,7 @@ import {
   orderedDisplacementInput,
 } from '@/src/utils/form.utils';
 import { formatDate } from '@/src/utils/formatter.utils';
-import { Client } from '@/src/types/clients';
-import { Driver } from '@/src/types/drivers';
-import { Vehicle } from '@/src/types/vehicles';
+import DisplacementOptionsList from '@/src/components/ui/displacement-options-list';
 
 interface Response {
   response: { displacements: Displacement[] };
@@ -47,28 +37,13 @@ const Displacements: FC = () => {
     'api/displacements'
   ) as unknown as Response;
 
-  const clients = useFetch('api/clients') as unknown as {
-    response: { clients: Client[] };
-  };
-  const drivers = useFetch('api/drivers') as unknown as {
-    response: { drivers: Driver[] };
-  };
-  const vehicles = useFetch('api/vehicles') as unknown as {
-    response: { vehicles: Vehicle[] };
-  };
-
   if (error) {
     toastService.error(messages.error.default);
   }
 
   if (isLoading || error) {
     return (
-      <PageContainer
-        styles={{
-          flexDirection: 'column',
-          justifyContent: 'flex-start',
-        }}
-      >
+      <PageContainer styles={{ alignItems: 'center' }}>
         <CircularProgress />
       </PageContainer>
     );
@@ -110,16 +85,6 @@ const Displacements: FC = () => {
     }
   };
 
-  const listMap = (type: 'idCliente' | 'idCondutor' | 'idVeiculo') => {
-    const map = {
-      idCliente: clients?.response?.clients,
-      idCondutor: drivers?.response?.drivers,
-      idVeiculo: vehicles?.response?.vehicles,
-    };
-
-    return map[type];
-  };
-
   return (
     <>
       <Head>
@@ -155,31 +120,7 @@ const Displacements: FC = () => {
                   onChange={(e) => onChange(e, key as keyof Displacement)}
                 />
               ))}
-              {list.map((key) => (
-                <FormControl variant='standard' fullWidth key={key}>
-                  <InputLabel variant='standard' id={key}>
-                    {' '}
-                    {key}{' '}
-                  </InputLabel>
-                  <Select
-                    variant='standard'
-                    labelId={key}
-                    label={key}
-                    aria-label='select'
-                    onChange={(e) => onChange(e, key as keyof Displacement)}
-                    value={form[key as keyof Displacement]}
-                  >
-                    {listMap(
-                      key as 'idCliente' | 'idCondutor' | 'idVeiculo'
-                    )?.map(({ id }) => (
-                      <MenuItem value={id} key={id}>
-                        {' '}
-                        {id}{' '}
-                      </MenuItem>
-                    ))}
-                  </Select>
-                </FormControl>
-              ))}
+              <DisplacementOptionsList form={form} onChange={onChange} />
             </>
           }
           Trigger={() => (
