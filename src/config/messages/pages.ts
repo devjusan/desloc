@@ -63,4 +63,20 @@ export const PAGE_MESSAGES = {
       },
     },
   },
+  GENERIC: {
+    DIALOG: {
+      EDIT: {
+        TITLE: (name: string) => `Editar ${name}`,
+        SUBTITLE: 'Edite as informações',
+      },
+      CREATE: {
+        TITLE: 'Novo',
+        SUBTITLE: 'Informe os dados',
+      },
+      DELETE: {
+        TITLE: (name: string) => `Excluir ${name}`,
+        SUBTITLE: 'Tem certeza que deseja excluir este item?',
+      },
+    },
+  },
 };

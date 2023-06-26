@@ -46,8 +46,8 @@ const Item: FC<IItem> = ({ cb, description, title, cbOnDelete, index }) => {
       </Box>
 
       <Dialog
-        title={PAGE_MESSAGES.CLIENT.DIALOG.DELETE.TITLE(title)}
-        description={PAGE_MESSAGES.CLIENT.DIALOG.DELETE.SUBTITLE}
+        title={PAGE_MESSAGES.GENERIC.DIALOG.DELETE.TITLE(title)}
+        description={PAGE_MESSAGES.GENERIC.DIALOG.DELETE.SUBTITLE}
         isOpen={open}
         setOpen={setOpen}
         cbOnSubscribe={() => {
