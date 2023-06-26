@@ -37,7 +37,6 @@ const useForm = <T>(
       | SelectChangeEvent<string | number | Date | null>
   ) => {
     const { name, value } = e.target;
-    console.log(value);
 
     const { errorsList } = keys[String(name)];
 

@@ -6,7 +6,7 @@ import { IFormErrors } from '@/src/types/form';
 import { Vehicle } from '@/src/types/vehicles';
 import { orderedDisplacementInput } from '@/src/utils/form.utils';
 import { FormControl, InputLabel, MenuItem, Select } from '@mui/material';
-import { ChangeEvent, FC } from 'react';
+import { ChangeEvent, FC, useEffect } from 'react';
 
 interface IDisplacementOptionsList {
   form: Displacement;
@@ -19,14 +19,18 @@ const DisplacementOptionsList: FC<IDisplacementOptionsList> = ({
   onChange,
   errors,
 }) => {
-  const clients = useFetch('api/clients') as unknown as {
+  const clients = useFetch('/api/clients') as unknown as {
     response: { clients: Client[] };
+    mutate: () => void;
   };
-  const drivers = useFetch('api/drivers') as unknown as {
+  const drivers = useFetch('/api/drivers') as unknown as {
     response: { drivers: Driver[] };
+
+    mutate: () => void;
   };
-  const vehicles = useFetch('api/vehicles') as unknown as {
+  const vehicles = useFetch('/api/vehicles') as unknown as {
     response: { vehicles: Vehicle[] };
+    mutate: () => void;
   };
 
   const { list } = orderedDisplacementInput();
@@ -43,6 +47,12 @@ const DisplacementOptionsList: FC<IDisplacementOptionsList> = ({
   const handleValue = (key: keyof Displacement) => {
     return form[key] ? form[key] : '';
   };
+
+  useEffect(() => {
+    clients.mutate();
+    drivers.mutate();
+    vehicles.mutate();
+  }, [clients, drivers, vehicles]);
 
   return (
     <>

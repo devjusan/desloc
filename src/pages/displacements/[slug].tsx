@@ -8,7 +8,7 @@ import useForm from '@/src/hooks/useForm';
 import { displacementService, toastService } from '@/src/services';
 import { Displacement } from '@/src/types/displacements';
 import { displacementFormSchema } from '@/src/utils/form-schema.utils';
-import { handleType, isDisplacement } from '@/src/utils/form.utils';
+import { isDisplacement, uniqDisplacementInput } from '@/src/utils/form.utils';
 import { formatDate } from '@/src/utils/formatter.utils';
 import { Button } from '@mui/material';
 import { isEqual } from 'lodash';
@@ -26,7 +26,7 @@ const FCDisplacements: FC<{ displacement: Displacement }> = ({
   );
 
   const [open, setOpen] = useState(false);
-  const formEntries = Object.entries(state);
+  const formEntries = uniqDisplacementInput(state as unknown as Displacement);
 
   const onSubmit = async () => {
     try {
@@ -54,10 +54,10 @@ const FCDisplacements: FC<{ displacement: Displacement }> = ({
 
   return (
     <PageContainer
-      styles={{ flexDirection: 'column', gap: '2rem', alignItems: 'center' }}
+      styles={{ flexDirection: 'column', gap: '1rem', alignItems: 'center' }}
     >
       <Dialog
-        title={PAGE_MESSAGES.DISPLACEMENT.DIALOG.EDIT.TITLE(state.nome)}
+        title={PAGE_MESSAGES.DISPLACEMENT.DIALOG.EDIT.TITLE(state.motivo)}
         description={PAGE_MESSAGES.DISPLACEMENT.DIALOG.EDIT.SUBTITLE}
         isOpen={open}
         setOpen={setOpen}
@@ -79,7 +79,6 @@ const FCDisplacements: FC<{ displacement: Displacement }> = ({
                     ? true
                     : undefined,
                 }}
-                type={handleType(key as keyof Displacement)}
                 error={errors[key]?.hasError}
                 helperText={errors[key]?.message}
                 onChange={onChange}
@@ -94,11 +93,17 @@ const FCDisplacements: FC<{ displacement: Displacement }> = ({
         }
         Trigger={() => <Button variant='contained'>Editar deslocamento</Button>}
       />
-      <h1>{state.placa}</h1>
-      <h2> {state.marcaModelo} </h2>
-      <h2> {formatDate(state.anoFabricacao.toString())} </h2>
-      <h2> {state.numeroHabilitacao} </h2>
-      <h2> {state.kmAtual} </h2>
+      <h2>Início do deslocamento: {formatDate(state.inicioDeslocamento)}</h2>
+      <h2>Final do deslocamento: {formatDate(state.fimDeslocamento)}</h2>
+      <h2> kmInicial: {state.kmInicial} </h2>
+      <h2> kmFinal: {state.kmFinal} </h2>
+      <h2> CheckList: {state.checkList} </h2>
+      <h2> Motivo: {state.motivo} </h2>
+      <h2> Observação: {state.observacao} </h2>
+      <h2> checkList: {state.checkList} </h2>
+      <h2> ID do condutor: {state.idCondutor} </h2>
+      <h2> ID do veículo: {state.idVeiculo} </h2>
+      <h2> ID do cliente: {state.idCliente} </h2>
     </PageContainer>
   );
 };

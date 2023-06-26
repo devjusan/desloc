@@ -30,7 +30,6 @@ interface Response {
 }
 
 const Displacements: FC = () => {
-  const inputs = displacementInputs();
   const { uniq } = orderedDisplacementInput();
   const { state, errors, isValid, onChange, setInitialErrorsState } = useForm(
     displacementFormSchema(),
@@ -59,10 +58,11 @@ const Displacements: FC = () => {
       await displacementService.createDisplacement(
         state as unknown as Displacement
       );
+      setInitialErrorsState();
       setOpen(false);
-
       mutate();
     } catch (error) {
+      setInitialErrorsState();
       toastService.error(messages.error.default);
       setOpen(false);
 
@@ -98,6 +98,7 @@ const Displacements: FC = () => {
           isOpen={open}
           setOpen={setOpen}
           cbOnSubscribe={onSubmit}
+          disableSubmitBtn={!isValid}
           Content={
             <>
               {uniq.map((key) => (
@@ -111,6 +112,9 @@ const Displacements: FC = () => {
                       ? true
                       : undefined,
                   }}
+                  name={key}
+                  error={errors[key]?.hasError}
+                  helperText={errors[key]?.message}
                   type={handleType(key as keyof Displacement)}
                   label={key}
                   onChange={onChange}

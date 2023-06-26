@@ -1,6 +1,10 @@
 import { displacementInputs } from '../helpers/formInputs';
 import { Displacement } from '../types/displacements';
 
+const isTypeOfList = (key: string) => {
+  return key === 'idCliente' || key === 'idCondutor' || key === 'idVeiculo';
+};
+
 export const isDisplacement = (key: keyof Displacement) => {
   return key === 'inicioDeslocamento' || key === 'fimDeslocamento';
 };
@@ -20,8 +24,7 @@ export const orderedDisplacementInput = (): {
   return Object.entries(inputs).reduce(
     (acc, input) => {
       const [key] = input;
-      const handler =
-        key === 'idCliente' || key === 'idCondutor' || key === 'idVeiculo';
+      const handler = isTypeOfList(key);
 
       if (handler) {
         acc.list.push(key);
@@ -35,5 +38,19 @@ export const orderedDisplacementInput = (): {
       uniq: [] as Array<string>,
       list: [] as Array<string>,
     }
+  );
+};
+
+export const uniqDisplacementInput = (state: Displacement) => {
+  const entries = Object.entries(state);
+
+  return Object.entries(
+    entries.reduce((acc, [key, value]) => {
+      if (!isTypeOfList(key)) {
+        acc[key] = value;
+      }
+
+      return acc;
+    }, {} as Record<string, string>)
   );
 };
