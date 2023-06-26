@@ -29,7 +29,7 @@ interface Response {
 
 const Displacements: FC = () => {
   const inputs = displacementInputs();
-  const { uniq, list } = orderedDisplacementInput();
+  const { uniq } = orderedDisplacementInput();
   const [form, setForm] = useState(Object.assign({}, inputs) as Displacement);
   const [open, setOpen] = useState(false);
   const router = useRouter();
