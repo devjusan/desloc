@@ -16,7 +16,6 @@ export const orderedDisplacementInput = (): {
   list: Array<string>;
 } => {
   const inputs = displacementInputs();
-  console.log(inputs);
 
   return Object.entries(inputs).reduce(
     (acc, input) => {

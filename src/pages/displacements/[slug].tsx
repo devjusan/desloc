@@ -14,6 +14,9 @@ const FCDisplacements: FC<{ displacement: Displacement }> = ({
     kmFinal,
     kmInicial,
     motivo,
+    idCliente,
+    idCondutor,
+    idVeiculo,
   },
 }) => {
   return (
@@ -24,9 +27,12 @@ const FCDisplacements: FC<{ displacement: Displacement }> = ({
       <p>{checkList}</p>
       <p>{formatDate(fimDeslocamento?.toString())}</p>
       <p>{formatDate(inicioDeslocamento?.toString())}</p>
-      <p>{kmFinal}</p>
-      <p>{kmInicial}</p>
-      <p>{motivo}</p>
+      <p>km inicial: {kmInicial}</p>
+      <p>km final: {kmFinal}</p>
+      <p>Motivo: {motivo}</p>
+      <p>ID do Cliente: {idCliente}</p>
+      <p>ID do Condutor: {idCondutor}</p>
+      <p>ID do Veículo: {idVeiculo}</p>
     </PageContainer>
   );
 };

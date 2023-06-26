@@ -57,6 +57,33 @@ const theme = createTheme({
         },
       },
     },
+    MuiSelect: {
+      styleOverrides: {
+        standard: {
+          borderBottom: '1px solid rgba(255, 255, 255, 0.7)',
+        },
+        icon: {
+          color: 'rgba(255, 255, 255, 0.7)',
+        },
+        select: {
+          color: 'white',
+        },
+      },
+    },
+    MuiInputLabel: {
+      styleOverrides: {
+        root: {
+          color: 'rgba(255, 255, 255, 0.7)',
+        },
+      },
+    },
+    MuiMenuItem: {
+      styleOverrides: {
+        root: {
+          color: 'white',
+        },
+      },
+    },
   },
 });
 
