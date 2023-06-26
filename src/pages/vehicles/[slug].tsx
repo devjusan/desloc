@@ -53,7 +53,7 @@ const FCVehicle: FC<{ vehicle: Vehicle }> = ({ vehicle }) => {
       styles={{ flexDirection: 'column', gap: '2rem', alignItems: 'center' }}
     >
       <Dialog
-        title={PAGE_MESSAGES.VEHICLE.DIALOG.EDIT.TITLE(state.nome)}
+        title={PAGE_MESSAGES.VEHICLE.DIALOG.EDIT.TITLE(state.placa)}
         description={PAGE_MESSAGES.VEHICLE.DIALOG.EDIT.SUBTITLE}
         isOpen={open}
         setOpen={setOpen}
@@ -82,7 +82,6 @@ const FCVehicle: FC<{ vehicle: Vehicle }> = ({ vehicle }) => {
       <h1>{state.placa}</h1>
       <h2> {state.marcaModelo} </h2>
       <h2> {formatDate(state.anoFabricacao.toString())} </h2>
-      <h2> {state.numeroHabilitacao} </h2>
       <h2> {state.kmAtual} </h2>
     </PageContainer>
   );

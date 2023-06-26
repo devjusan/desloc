@@ -6,12 +6,14 @@ import { PAGE_MESSAGES } from '@/src/config/messages/pages';
 import { PageContainer } from '@/src/css/global';
 import { vehicleInputs } from '@/src/helpers/formInputs';
 import useFetch from '@/src/hooks/useFetch';
+import useForm from '@/src/hooks/useForm';
 import { toastService, vehicleService } from '@/src/services';
 import { Vehicle } from '@/src/types/vehicles';
+import { vehicleFormSchema } from '@/src/utils/form-schema.utils';
 import { Button, CircularProgress } from '@mui/material';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
-import { ChangeEvent, FC, useState } from 'react';
+import { FC, useState } from 'react';
 
 interface Response {
   response: { vehicles: Vehicle[] };
@@ -21,11 +23,13 @@ interface Response {
 }
 
 const Vehicles: FC = () => {
-  const inputs = vehicleInputs();
+  const { state, errors, isValid, onChange, setInitialErrorsState } = useForm(
+    vehicleFormSchema(),
+    vehicleInputs()
+  );
   const router = useRouter();
-  const [form, setForm] = useState(Object.assign({}, inputs) as Vehicle);
   const [open, setOpen] = useState(false);
-  const vehicleEntries = Object.entries(inputs);
+  const vehicleEntries = Object.entries(state);
 
   const { response, isLoading, error, mutate } = useFetch(
     'api/vehicles'
@@ -43,22 +47,15 @@ const Vehicles: FC = () => {
     );
   }
 
-  const onChange = (
-    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
-    key: keyof Vehicle
-  ) => {
-    e.preventDefault();
-
-    setForm({ ...form, [key]: e.target.value });
-  };
-
   const onSubmit = async () => {
     try {
-      await vehicleService.createVehicle(form);
+      await vehicleService.createVehicle(state as unknown as Vehicle);
+      setInitialErrorsState();
       setOpen(false);
 
       mutate();
     } catch (error) {
+      setInitialErrorsState();
       toastService.error(messages.error.default);
       setOpen(false);
     }
@@ -92,6 +89,7 @@ const Vehicles: FC = () => {
           isOpen={open}
           setOpen={setOpen}
           cbOnSubscribe={onSubmit}
+          disableSubmitBtn={!isValid}
           Content={
             <>
               {vehicleEntries.map(([key]) => (
@@ -100,7 +98,10 @@ const Vehicles: FC = () => {
                   id={key}
                   label={key}
                   variant='standard'
-                  onChange={(e) => onChange(e, key as keyof Vehicle)}
+                  onChange={onChange}
+                  name={key}
+                  error={errors[key]?.hasError}
+                  helperText={errors[key]?.message}
                 />
               ))}
             </>
