@@ -15,6 +15,7 @@ const Dialog: FC<DialogProps> = ({
   Content,
   description,
   cbOnSubscribe,
+  cbOnCancel,
   title,
   height,
   width,
@@ -25,6 +26,7 @@ const Dialog: FC<DialogProps> = ({
   };
 
   const handleClose = () => {
+    cbOnCancel?.();
     setOpen(false);
   };
 

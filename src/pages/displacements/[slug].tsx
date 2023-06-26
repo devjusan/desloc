@@ -13,17 +13,14 @@ import { formatDate } from '@/src/utils/formatter.utils';
 import { Button } from '@mui/material';
 import { isEqual } from 'lodash';
 import { GetServerSideProps } from 'next';
-import { FC, useState } from 'react';
+import { FC, SetStateAction, useState } from 'react';
 import { mutate } from 'swr';
 
 const FCDisplacements: FC<{ displacement: Displacement }> = ({
   displacement,
 }) => {
-  const { state, errors, isValid, onChange, setInitialErrorsState } = useForm(
-    displacementFormSchema(),
-    displacement,
-    false
-  );
+  const { state, errors, isValid, onChange, setState, setInitialErrorsState } =
+    useForm(displacementFormSchema(), displacement, false);
 
   const [open, setOpen] = useState(false);
   const formEntries = uniqDisplacementInput(state as unknown as Displacement);
@@ -52,6 +49,11 @@ const FCDisplacements: FC<{ displacement: Displacement }> = ({
     }
   };
 
+  const onCancel = () => {
+    setInitialErrorsState();
+    setState(displacement as unknown as SetStateAction<Record<string, string>>);
+  };
+
   return (
     <PageContainer
       styles={{ flexDirection: 'column', gap: '1rem', alignItems: 'center' }}
@@ -62,6 +64,7 @@ const FCDisplacements: FC<{ displacement: Displacement }> = ({
         isOpen={open}
         setOpen={setOpen}
         cbOnSubscribe={onSubmit}
+        cbOnCancel={onCancel}
         disableSubmitBtn={!isValid}
         Content={
           <>

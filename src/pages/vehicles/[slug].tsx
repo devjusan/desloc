@@ -11,15 +11,12 @@ import { formatDate } from '@/src/utils/formatter.utils';
 import { Button } from '@mui/material';
 import { isEqual } from 'lodash';
 import { GetServerSideProps } from 'next';
-import { FC, useState } from 'react';
+import { FC, SetStateAction, useState } from 'react';
 import { mutate } from 'swr';
 
 const FCVehicle: FC<{ vehicle: Vehicle }> = ({ vehicle }) => {
-  const { state, errors, isValid, onChange, setInitialErrorsState } = useForm(
-    vehicleFormSchema(),
-    vehicle,
-    false
-  );
+  const { state, errors, isValid, onChange, setInitialErrorsState, setState } =
+    useForm(vehicleFormSchema(), vehicle, false);
 
   const [open, setOpen] = useState(false);
   const formEntries = Object.entries(state);
@@ -48,6 +45,11 @@ const FCVehicle: FC<{ vehicle: Vehicle }> = ({ vehicle }) => {
     }
   };
 
+  const onCancel = () => {
+    setInitialErrorsState();
+    setState(vehicle as unknown as SetStateAction<Record<string, string>>);
+  };
+
   return (
     <PageContainer
       styles={{ flexDirection: 'column', gap: '2rem', alignItems: 'center' }}
@@ -58,6 +60,7 @@ const FCVehicle: FC<{ vehicle: Vehicle }> = ({ vehicle }) => {
         isOpen={open}
         setOpen={setOpen}
         cbOnSubscribe={onSubmit}
+        cbOnCancel={onCancel}
         disableSubmitBtn={!isValid}
         Content={
           <>

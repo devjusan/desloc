@@ -11,6 +11,7 @@ export interface DialogProps {
   Content: ReactElement;
   setOpen: Dispatch<SetStateAction<boolean>>;
   cbOnSubscribe: () => void;
+  cbOnCancel?: () => void;
   disableSubmitBtn?: boolean;
   width?: string;
   height?: string;

@@ -1,7 +1,7 @@
 import { PageContainer } from '@/src/css/global';
 import { clientService, toastService } from '@/src/services';
 import { GetServerSideProps } from 'next';
-import { FC, useState } from 'react';
+import { FC, SetStateAction, useState } from 'react';
 import { Client } from '../types/clients';
 import Dialog from '../components/portals/dialog';
 import { PAGE_MESSAGES } from '../config/messages/pages';
@@ -14,11 +14,8 @@ import { clientFormSchema } from '../utils/form-schema.utils';
 import useForm from '../hooks/useForm';
 
 const FCClient: FC<{ client: Client }> = ({ client }) => {
-  const { state, errors, isValid, onChange, setInitialErrorsState } = useForm(
-    clientFormSchema(),
-    client,
-    false
-  );
+  const { state, errors, isValid, onChange, setInitialErrorsState, setState } =
+    useForm(clientFormSchema(), client, false);
   const [open, setOpen] = useState(false);
   const formEntries = Object.entries(state);
 
@@ -46,6 +43,11 @@ const FCClient: FC<{ client: Client }> = ({ client }) => {
     }
   };
 
+  const onCancel = () => {
+    setInitialErrorsState();
+    setState(client as unknown as SetStateAction<Record<string, string>>);
+  };
+
   return (
     <PageContainer
       styles={{ flexDirection: 'column', gap: '2rem', alignItems: 'center' }}
@@ -56,6 +58,7 @@ const FCClient: FC<{ client: Client }> = ({ client }) => {
         isOpen={open}
         setOpen={setOpen}
         cbOnSubscribe={onSubmit}
+        cbOnCancel={onCancel}
         disableSubmitBtn={!isValid}
         Content={
           <>

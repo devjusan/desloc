@@ -1,5 +1,5 @@
 import { GetServerSideProps } from 'next';
-import { FC, useState } from 'react';
+import { FC, SetStateAction, useState } from 'react';
 import { mutate } from 'swr';
 import Dialog from '@/src/components/portals/dialog';
 import Input from '@/src/components/ui/input';
@@ -15,11 +15,8 @@ import { Button } from '@mui/material';
 import { isEqual } from 'lodash';
 
 const FCDriver: FC<{ driver: Driver }> = ({ driver }) => {
-  const { state, errors, isValid, onChange, setInitialErrorsState } = useForm(
-    driverFormSchema(),
-    driver,
-    false
-  );
+  const { state, errors, isValid, onChange, setInitialErrorsState, setState } =
+    useForm(driverFormSchema(), driver, false);
 
   const [open, setOpen] = useState(false);
   const formEntries = Object.entries(state);
@@ -48,6 +45,11 @@ const FCDriver: FC<{ driver: Driver }> = ({ driver }) => {
     }
   };
 
+  const onCancel = () => {
+    setInitialErrorsState();
+    setState(driver as unknown as SetStateAction<Record<string, string>>);
+  };
+
   return (
     <PageContainer
       styles={{ flexDirection: 'column', gap: '2rem', alignItems: 'center' }}
@@ -58,6 +60,7 @@ const FCDriver: FC<{ driver: Driver }> = ({ driver }) => {
         isOpen={open}
         setOpen={setOpen}
         cbOnSubscribe={onSubmit}
+        cbOnCancel={onCancel}
         disableSubmitBtn={!isValid}
         Content={
           <>
