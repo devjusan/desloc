@@ -1,7 +1,10 @@
 import { Box, Typography } from '@mui/material';
+import { useRouter } from 'next/router';
 import { FC } from 'react';
 
 const Header: FC = () => {
+  const router = useRouter();
+
   return (
     <Box
       sx={{
@@ -24,6 +27,7 @@ const Header: FC = () => {
           color: (theme) => theme.palette.secondary.main,
           fontWeight: 'bold',
         }}
+        onClick={() => router.push('/')}
       >
         Deslocamento
       </Typography>

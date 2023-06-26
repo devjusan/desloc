@@ -12,7 +12,7 @@ const PagesMenu: FC = () => {
       component='header'
       sx={{
         display: 'flex',
-        justifyContent: 'flex-end',
+        justifyContent: isMobile ? 'flex-end' : 'center',
         alignItems: 'center',
         width: '100%',
       }}
