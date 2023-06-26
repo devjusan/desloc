@@ -6,12 +6,14 @@ import { PAGE_MESSAGES } from '@/src/config/messages/pages';
 import { PageContainer } from '@/src/css/global';
 import { driverInputs } from '@/src/helpers/formInputs';
 import useFetch from '@/src/hooks/useFetch';
+import useForm from '@/src/hooks/useForm';
 import { driversService, toastService } from '@/src/services';
 import { Driver } from '@/src/types/drivers';
+import { driverFormSchema } from '@/src/utils/form-schema.utils';
 import { Button, CircularProgress } from '@mui/material';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
-import { ChangeEvent, FC, useState } from 'react';
+import { FC, useState } from 'react';
 
 interface Response {
   response: { drivers: Driver[] };
@@ -21,14 +23,16 @@ interface Response {
 }
 
 const Drivers: FC = () => {
-  const inputs = driverInputs();
-  const driverEntries = Object.entries(inputs);
-  const [form, setForm] = useState(Object.assign({}, inputs) as Driver);
-  const router = useRouter();
-  const [open, setOpen] = useState(false);
   const { response, isLoading, error, mutate } = useFetch(
     'api/drivers'
   ) as unknown as Response;
+  const { state, errors, isValid, onChange, setInitialErrorsState } = useForm(
+    driverFormSchema(),
+    driverInputs()
+  );
+  const driverEntries = Object.entries(state);
+  const router = useRouter();
+  const [open, setOpen] = useState(false);
 
   if (error) {
     toastService.error(messages.error.default);
@@ -42,27 +46,20 @@ const Drivers: FC = () => {
     );
   }
 
-  const onChange = (
-    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
-    key: keyof Driver
-  ) => {
-    e.preventDefault();
-
-    setForm({ ...form, [key]: e.target.value });
-  };
-
   const onSubmit = async () => {
     try {
-      const { catergoriaHabilitacao, id, ...rest } = form;
+      const { catergoriaHabilitacao, id, ...rest } = state as unknown as Driver;
 
       await driversService.createDriver({
         ...rest,
         categoriaHabilitacao: catergoriaHabilitacao,
       });
-      setOpen(false);
 
+      setInitialErrorsState();
+      setOpen(false);
       mutate();
     } catch (error) {
+      setInitialErrorsState();
       toastService.error(messages.error.default);
       setOpen(false);
 
@@ -98,16 +95,23 @@ const Drivers: FC = () => {
           isOpen={open}
           setOpen={setOpen}
           cbOnSubscribe={onSubmit}
+          disableSubmitBtn={!isValid}
           Content={
             <>
               {driverEntries.map(([key]) => (
                 <Input
                   key={key}
                   id={key}
-                  label={key === 'vencimentoHabilitacao' ? '' : key}
+                  label={key}
                   variant='standard'
                   type={key === 'vencimentoHabilitacao' ? 'date' : 'text'}
-                  onChange={(e) => onChange(e, key as keyof Driver)}
+                  onChange={onChange}
+                  name={key}
+                  error={errors[key]?.hasError}
+                  helperText={errors[key]?.message}
+                  InputLabelProps={{
+                    shrink: key === 'vencimentoHabilitacao' ? true : undefined,
+                  }}
                 />
               ))}
             </>

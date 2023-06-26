@@ -6,7 +6,7 @@ import { Button, CircularProgress } from '@mui/material';
 import { messages } from '../config/messages/general';
 import Item from '../components/ui/item';
 import { useRouter } from 'next/router';
-import { ChangeEvent, FC, useState } from 'react';
+import { FC, useState } from 'react';
 import { Client } from '../types/clients';
 import Input from '../components/ui/input';
 import Dialog from '../components/portals/dialog';
@@ -23,7 +23,7 @@ interface Response {
 }
 
 const Clients: FC = () => {
-  const { state, errors, isValid, onChange } = useForm(
+  const { state, errors, isValid, onChange, setInitialErrorsState } = useForm(
     clientFormSchema(),
     clientInputs()
   );
@@ -50,10 +50,11 @@ const Clients: FC = () => {
     try {
       await clientService.createClient(state as unknown as Client);
 
+      setInitialErrorsState();
       setOpen(false);
-
       mutate();
     } catch (error) {
+      setInitialErrorsState();
       toastService.error(messages.error.default);
       setOpen(false);
     }

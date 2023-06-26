@@ -14,7 +14,7 @@ import { clientFormSchema } from '../utils/form-schema.utils';
 import useForm from '../hooks/useForm';
 
 const FCClient: FC<{ client: Client }> = ({ client }) => {
-  const { state, errors, isValid, onChange } = useForm(
+  const { state, errors, isValid, onChange, setInitialErrorsState } = useForm(
     clientFormSchema(),
     client,
     false
@@ -35,10 +35,12 @@ const FCClient: FC<{ client: Client }> = ({ client }) => {
         state as unknown as Client,
         data.id.toString()
       );
-      setOpen(false);
 
+      setInitialErrorsState();
+      setOpen(false);
       mutate('/api/clients');
     } catch (error) {
+      setInitialErrorsState();
       toastService.error(messages.error.default);
       setOpen(false);
     }

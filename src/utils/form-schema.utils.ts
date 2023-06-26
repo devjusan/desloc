@@ -84,3 +84,48 @@ export const clientFormSchema = (): Array<IFormSchema> => {
     },
   ];
 };
+
+export const driverFormSchema = (): Array<IFormSchema> => {
+  return [
+    {
+      name: 'nome',
+      errorsList: [
+        {
+          hasError: false,
+          message: 'Campo obrigatório',
+          regex: (value) => !!value,
+        },
+      ],
+    },
+    {
+      name: 'numeroHabilitacao',
+      errorsList: [
+        {
+          hasError: false,
+          message: 'Campo obrigatório',
+          regex: (value) => !!value,
+        },
+      ],
+    },
+    {
+      name: 'vencimentoHabilitacao',
+      errorsList: [
+        {
+          hasError: false,
+          message: 'Campo obrigatório',
+          regex: (value) => !!value,
+        },
+      ],
+    },
+    {
+      name: 'catergoriaHabilitacao',
+      errorsList: [
+        {
+          hasError: false,
+          message: 'Campo obrigatório',
+          regex: (value) => !!value,
+        },
+      ],
+    },
+  ];
+};

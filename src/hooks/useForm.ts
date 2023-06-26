@@ -77,12 +77,22 @@ const useForm = <T>(
     setState((prev) => ({ ...prev, [name]: value }));
   };
 
+  const setInitialErrorsState = () => {
+    setErrors(
+      keyMap(schema, (item) => item.name) as unknown as Record<
+        string,
+        IFormErrors
+      >
+    );
+  };
+
   return {
     isValid,
     errors,
     onChange,
     state,
     setState,
+    setInitialErrorsState,
   };
 };
 
