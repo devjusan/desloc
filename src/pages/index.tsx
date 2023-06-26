@@ -12,6 +12,8 @@ import Input from '../components/ui/input';
 import Dialog from '../components/portals/dialog';
 import { clientInputs } from '../helpers/formInputs';
 import { PAGE_MESSAGES } from '../config/messages/pages';
+import useForm from '../hooks/useForm';
+import { clientFormSchema } from '../utils/form-schema.utils';
 
 interface Response {
   response: { clients: Client[] };
@@ -21,14 +23,16 @@ interface Response {
 }
 
 const Clients: FC = () => {
-  const inputs = clientInputs();
-  const [form, setForm] = useState(Object.assign({}, inputs) as Client);
+  const { state, errors, isValid, onChange } = useForm(
+    clientFormSchema(),
+    clientInputs()
+  );
   const [open, setOpen] = useState(false);
   const router = useRouter();
   const { response, isLoading, error, mutate } = useFetch(
     'api/clients'
   ) as unknown as Response;
-  const clientsEntries = Object.entries(inputs);
+  const clientsEntries = Object.entries(state);
 
   if (error) {
     toastService.error(messages.error.default);
@@ -42,18 +46,10 @@ const Clients: FC = () => {
     );
   }
 
-  const onChange = (
-    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
-    key: keyof Client
-  ) => {
-    e.preventDefault();
-
-    setForm({ ...form, [key]: e.target.value });
-  };
-
   const onSubmit = async () => {
     try {
-      await clientService.createClient(form);
+      await clientService.createClient(state as unknown as Client);
+
       setOpen(false);
 
       mutate();
@@ -95,6 +91,7 @@ const Clients: FC = () => {
           isOpen={open}
           setOpen={setOpen}
           cbOnSubscribe={onSubmit}
+          disableSubmitBtn={!isValid}
           Content={
             <>
               {clientsEntries.map(([key]) => (
@@ -102,8 +99,11 @@ const Clients: FC = () => {
                   key={key}
                   id={key}
                   label={key}
+                  name={key}
+                  error={errors[key]?.hasError}
+                  helperText={errors[key]?.message}
                   variant='standard'
-                  onChange={(e) => onChange(e, key as keyof Client)}
+                  onChange={onChange}
                 />
               ))}
             </>

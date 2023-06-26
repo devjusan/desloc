@@ -18,6 +18,7 @@ const Dialog: FC<DialogProps> = ({
   title,
   height,
   width,
+  disableSubmitBtn,
 }) => {
   const handleClickOpen = () => {
     setOpen(true);
@@ -74,7 +75,11 @@ const Dialog: FC<DialogProps> = ({
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>Cancelar</Button>
-          <Button onClick={cbOnSubscribe} variant='contained'>
+          <Button
+            onClick={cbOnSubscribe}
+            disabled={disableSubmitBtn}
+            variant='contained'
+          >
             Enviar
           </Button>
         </DialogActions>

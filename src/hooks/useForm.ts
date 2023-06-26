@@ -2,13 +2,19 @@ import { ChangeEvent, useEffect, useState } from 'react';
 import { IFormErrors, IFormSchema } from '../types/form';
 import { keyMap } from '../utils/array.utils';
 
-const useForm = <T>(schema: Array<IFormSchema>, initialState?: T) => {
+const useForm = <T>(
+  schema: Array<IFormSchema>,
+  initialState?: T,
+  hasInitialErrors = true
+) => {
   const [isValid, setIsValid] = useState(false);
   const [errors, setErrors] = useState<Record<string, IFormErrors>>(
-    keyMap(schema, (item) => item.name) as unknown as Record<
-      string,
-      IFormErrors
-    >
+    hasInitialErrors
+      ? (keyMap(schema, (item) => item.name) as unknown as Record<
+          string,
+          IFormErrors
+        >)
+      : {}
   );
   const [state, setState] = useState<Record<string, string>>(
     initialState || {}
