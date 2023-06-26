@@ -129,3 +129,153 @@ export const driverFormSchema = (): Array<IFormSchema> => {
     },
   ];
 };
+
+export const vehicleFormSchema = (): Array<IFormSchema> => {
+  return [
+    {
+      name: 'placa',
+      errorsList: [
+        {
+          hasError: false,
+          message: 'Campo obrigatório',
+          regex: (value) => !!value,
+        },
+      ],
+    },
+    {
+      name: 'marcaModelo',
+      errorsList: [
+        {
+          hasError: false,
+          message: 'Campo obrigatório',
+          regex: (value) => !!value,
+        },
+      ],
+    },
+    {
+      name: 'anoFabricacao',
+      errorsList: [
+        {
+          hasError: false,
+          message: 'Campo obrigatório',
+          regex: (value) => !!value,
+        },
+      ],
+    },
+    {
+      name: 'kmAtual',
+      errorsList: [
+        {
+          hasError: false,
+          message: 'Campo obrigatório',
+          regex: (value) => !!value,
+        },
+      ],
+    },
+  ];
+};
+
+export const displacementFormSchema = (): Array<IFormSchema> => {
+  return [
+    {
+      name: 'kmInicial',
+      errorsList: [
+        {
+          hasError: false,
+          message: 'Campo obrigatório',
+          regex: (value) => !!value,
+        },
+      ],
+    },
+    {
+      name: 'kmFinal',
+      errorsList: [
+        {
+          hasError: false,
+          message: 'Campo obrigatório',
+          regex: (value) => !!value,
+        },
+      ],
+    },
+    {
+      name: 'inicioDeslocamento',
+      errorsList: [
+        {
+          hasError: false,
+          message: 'Campo obrigatório',
+          regex: (value) => !!value,
+        },
+      ],
+    },
+    {
+      name: 'fimDeslocamento',
+      errorsList: [
+        {
+          hasError: false,
+          message: 'Campo obrigatório',
+          regex: (value) => !!value,
+        },
+      ],
+    },
+    {
+      name: 'checkList',
+      errorsList: [
+        {
+          hasError: false,
+          message: 'Campo obrigatório',
+          regex: (value) => !!value,
+        },
+      ],
+    },
+    {
+      name: 'motivo',
+      errorsList: [
+        {
+          hasError: false,
+          message: 'Campo obrigatório',
+          regex: (value) => !!value,
+        },
+      ],
+    },
+    {
+      name: 'observacao',
+      errorsList: [
+        {
+          hasError: false,
+          message: 'Campo obrigatório',
+          regex: (value) => !!value,
+        },
+      ],
+    },
+    {
+      name: 'idCondutor',
+      errorsList: [
+        {
+          hasError: false,
+          message: 'Campo obrigatório',
+          regex: (value) => !!value,
+        },
+      ],
+    },
+    {
+      name: 'idVeiculo',
+      errorsList: [
+        {
+          hasError: false,
+          message: 'Campo obrigatório',
+          regex: (value) => !!value,
+        },
+      ],
+    },
+    {
+      name: 'idCliente',
+      errorsList: [
+        {
+          hasError: false,
+          message: 'Campo obrigatório',
+          regex: (value) => !!value,
+        },
+      ],
+    },
+  ];
+};

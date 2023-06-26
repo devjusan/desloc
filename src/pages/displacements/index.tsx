@@ -19,6 +19,8 @@ import {
 } from '@/src/utils/form.utils';
 import { formatDate } from '@/src/utils/formatter.utils';
 import DisplacementOptionsList from '@/src/components/ui/displacement-options-list';
+import { displacementFormSchema } from '@/src/utils/form-schema.utils';
+import useForm from '@/src/hooks/useForm';
 
 interface Response {
   response: { displacements: Displacement[] };
@@ -30,7 +32,10 @@ interface Response {
 const Displacements: FC = () => {
   const inputs = displacementInputs();
   const { uniq } = orderedDisplacementInput();
-  const [form, setForm] = useState(Object.assign({}, inputs) as Displacement);
+  const { state, errors, isValid, onChange, setInitialErrorsState } = useForm(
+    displacementFormSchema(),
+    displacementInputs()
+  );
   const [open, setOpen] = useState(false);
   const router = useRouter();
   const { response, isLoading, error, mutate } = useFetch(
@@ -49,20 +54,11 @@ const Displacements: FC = () => {
     );
   }
 
-  const onChange = (
-    e:
-      | ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-      | SelectChangeEvent<unknown>,
-    key: keyof Displacement
-  ) => {
-    e.preventDefault();
-
-    setForm({ ...form, [key]: e.target.value });
-  };
-
   const onSubmit = async () => {
     try {
-      await displacementService.createDisplacement(form);
+      await displacementService.createDisplacement(
+        state as unknown as Displacement
+      );
       setOpen(false);
 
       mutate();
@@ -117,10 +113,14 @@ const Displacements: FC = () => {
                   }}
                   type={handleType(key as keyof Displacement)}
                   label={key}
-                  onChange={(e) => onChange(e, key as keyof Displacement)}
+                  onChange={onChange}
                 />
               ))}
-              <DisplacementOptionsList form={form} onChange={onChange} />
+              <DisplacementOptionsList
+                errors={errors}
+                form={state as unknown as Displacement}
+                onChange={onChange}
+              />
             </>
           }
           Trigger={() => (

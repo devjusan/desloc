@@ -1,6 +1,7 @@
 import { ChangeEvent, useEffect, useState } from 'react';
 import { IFormErrors, IFormSchema } from '../types/form';
 import { keyMap } from '../utils/array.utils';
+import { SelectChangeEvent } from '@mui/material';
 
 const useForm = <T>(
   schema: Array<IFormSchema>,
@@ -30,8 +31,13 @@ const useForm = <T>(
     setIsValid(false);
   }, []);
 
-  const onChange = (e: ChangeEvent<HTMLInputElement>) => {
+  const onChange = (
+    e:
+      | ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+      | SelectChangeEvent<string | number | Date | null>
+  ) => {
     const { name, value } = e.target;
+    console.log(value);
 
     const { errorsList } = keys[String(name)];
 
@@ -62,19 +68,22 @@ const useForm = <T>(
       const { regex, message } = errorsList[Number(index)];
 
       if (regex instanceof RegExp) {
-        const hasError = regex.test(value);
+        const handleValue = value?.toString() || '';
+        const hasError = regex.test(handleValue);
 
         setErrors((prev) => ({ ...getPrev(prev, hasError, message) }));
       } else if (regex instanceof Function) {
-        const hasError = !regex(value);
+        const handleValue = value?.toString() || '';
+        const hasError = !regex(handleValue);
 
         setErrors((prev) => ({
           ...getPrev(prev, hasError, message),
         }));
       }
     }
+    const handleValue = value?.toString() || '';
 
-    setState((prev) => ({ ...prev, [name]: value }));
+    setState((prev) => ({ ...prev, [name]: handleValue }));
   };
 
   const setInitialErrorsState = () => {

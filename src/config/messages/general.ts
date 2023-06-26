@@ -9,9 +9,11 @@ export const messages = {
   },
   vehicles: {
     error: 'Não foi possível carregar os veículos.',
+    equal: 'Os dados não foram alterados.',
   },
   displacements: {
     error: 'Não foi possível carregar os deslocamentos.',
+    equal: 'Os dados não foram alterados.',
   },
   drivers: {
     error: 'Não foi possível carregar os motoristas.',

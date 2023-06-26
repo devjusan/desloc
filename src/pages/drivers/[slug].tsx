@@ -1,9 +1,11 @@
+import { GetServerSideProps } from 'next';
+import { FC, useState } from 'react';
+import { mutate } from 'swr';
 import Dialog from '@/src/components/portals/dialog';
 import Input from '@/src/components/ui/input';
 import { messages } from '@/src/config/messages/general';
 import { PAGE_MESSAGES } from '@/src/config/messages/pages';
 import { PageContainer } from '@/src/css/global';
-import { driverInputs } from '@/src/helpers/formInputs';
 import useForm from '@/src/hooks/useForm';
 import { driversService, toastService } from '@/src/services';
 import { Driver } from '@/src/types/drivers';
@@ -11,9 +13,6 @@ import { driverFormSchema } from '@/src/utils/form-schema.utils';
 import { formatDate } from '@/src/utils/formatter.utils';
 import { Button } from '@mui/material';
 import { isEqual } from 'lodash';
-import { GetServerSideProps } from 'next';
-import { FC, useState } from 'react';
-import { mutate } from 'swr';
 
 const FCDriver: FC<{ driver: Driver }> = ({ driver }) => {
   const { state, errors, isValid, onChange, setInitialErrorsState } = useForm(

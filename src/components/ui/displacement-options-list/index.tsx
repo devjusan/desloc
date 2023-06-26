@@ -2,30 +2,22 @@ import useFetch from '@/src/hooks/useFetch';
 import { Client } from '@/src/types/clients';
 import { Displacement } from '@/src/types/displacements';
 import { Driver } from '@/src/types/drivers';
+import { IFormErrors } from '@/src/types/form';
 import { Vehicle } from '@/src/types/vehicles';
 import { orderedDisplacementInput } from '@/src/utils/form.utils';
-import {
-  FormControl,
-  InputLabel,
-  MenuItem,
-  Select,
-  SelectChangeEvent,
-} from '@mui/material';
+import { FormControl, InputLabel, MenuItem, Select } from '@mui/material';
 import { ChangeEvent, FC } from 'react';
 
 interface IDisplacementOptionsList {
   form: Displacement;
-  onChange: (
-    e:
-      | ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-      | SelectChangeEvent<unknown>,
-    key: keyof Displacement
-  ) => void;
+  onChange: ((e: ChangeEvent<HTMLInputElement>) => void) | any;
+  errors: Record<string, IFormErrors>;
 }
 
 const DisplacementOptionsList: FC<IDisplacementOptionsList> = ({
   form,
   onChange,
+  errors,
 }) => {
   const clients = useFetch('api/clients') as unknown as {
     response: { clients: Client[] };
@@ -64,8 +56,9 @@ const DisplacementOptionsList: FC<IDisplacementOptionsList> = ({
             variant='standard'
             labelId={key}
             label={key}
-            aria-label='select'
-            onChange={(e) => onChange(e, key as keyof Displacement)}
+            name={key}
+            error={errors?.[key]?.hasError}
+            onChange={onChange}
             value={handleValue(key as keyof Displacement)}
           >
             {listMap(key as 'idCliente' | 'idCondutor' | 'idVeiculo')?.map(
