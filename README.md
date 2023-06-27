@@ -14,6 +14,4 @@ pnpm dev
 
 Abra [http://localhost:3000](http://localhost:3000) no seu computador para ver o resultado.
 
-[https://desloc.vercel.app/]
-
 ## Deploy com
