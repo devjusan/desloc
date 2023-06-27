@@ -1,4 +1,3 @@
-import Dialog from '@/src/components/portals/dialog';
 import Input from '@/src/components/ui/input';
 import Item from '@/src/components/ui/item';
 import { messages } from '@/src/config/messages/general';
@@ -11,9 +10,18 @@ import { driversService, toastService } from '@/src/services';
 import { Driver } from '@/src/types/drivers';
 import { driverFormSchema } from '@/src/utils/form-schema.utils';
 import { Button, CircularProgress } from '@mui/material';
+import dynamic from 'next/dynamic';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { FC, useState } from 'react';
+
+const DynamicDialog = dynamic(() => import('@/src/components/portals/dialog'), {
+  loading: () => (
+    <PageContainer styles={{ alignItems: 'center' }}>
+      <CircularProgress />
+    </PageContainer>
+  ),
+});
 
 interface Response {
   response: { drivers: Driver[] };
@@ -89,7 +97,7 @@ const Drivers: FC = () => {
           justifyContent: 'flex-start',
         }}
       >
-        <Dialog
+        <DynamicDialog
           title={PAGE_MESSAGES.DRIVER.DIALOG.CREATE.TITLE}
           description={PAGE_MESSAGES.DRIVER.DIALOG.CREATE.SUBTITLE}
           isOpen={open}

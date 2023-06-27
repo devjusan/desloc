@@ -9,11 +9,19 @@ import { useRouter } from 'next/router';
 import { FC, useState } from 'react';
 import { Client } from '../types/clients';
 import Input from '../components/ui/input';
-import Dialog from '../components/portals/dialog';
 import { clientInputs } from '../helpers/formInputs';
 import { PAGE_MESSAGES } from '../config/messages/pages';
 import useForm from '../hooks/useForm';
 import { clientFormSchema } from '../utils/form-schema.utils';
+import dynamic from 'next/dynamic';
+
+const DynamicDialog = dynamic(() => import('@/src/components/portals/dialog'), {
+  loading: () => (
+    <PageContainer styles={{ alignItems: 'center' }}>
+      <CircularProgress />
+    </PageContainer>
+  ),
+});
 
 interface Response {
   response: { clients: Client[] };
@@ -86,7 +94,7 @@ const Clients: FC = () => {
           justifyContent: 'flex-start',
         }}
       >
-        <Dialog
+        <DynamicDialog
           title={PAGE_MESSAGES.CLIENT.DIALOG.CREATE.TITLE}
           description={PAGE_MESSAGES.CLIENT.DIALOG.CREATE.SUBTITLE}
           isOpen={open}

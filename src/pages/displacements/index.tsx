@@ -1,15 +1,14 @@
 import Head from 'next/head';
-import { ChangeEvent, FC, useState } from 'react';
+import { FC, useState } from 'react';
 import { PageContainer } from '@/src/css/global';
 import { useRouter } from 'next/router';
 import useFetch from '@/src/hooks/useFetch';
-import { Button, CircularProgress, SelectChangeEvent } from '@mui/material';
+import { Button, CircularProgress } from '@mui/material';
 import { displacementService, toastService } from '@/src/services';
 import { messages } from '@/src/config/messages/general';
 import { Displacement } from '@/src/types/displacements';
 import Item from '@/src/components/ui/item';
 import Input from '@/src/components/ui/input';
-import Dialog from '@/src/components/portals/dialog';
 import { PAGE_MESSAGES } from '@/src/config/messages/pages';
 import { displacementInputs } from '@/src/helpers/formInputs';
 import {
@@ -21,6 +20,15 @@ import { formatDate } from '@/src/utils/formatter.utils';
 import DisplacementOptionsList from '@/src/components/ui/displacement-options-list';
 import { displacementFormSchema } from '@/src/utils/form-schema.utils';
 import useForm from '@/src/hooks/useForm';
+import dynamic from 'next/dynamic';
+
+const DynamicDialog = dynamic(() => import('@/src/components/portals/dialog'), {
+  loading: () => (
+    <PageContainer styles={{ alignItems: 'center' }}>
+      <CircularProgress />
+    </PageContainer>
+  ),
+});
 
 interface Response {
   response: { displacements: Displacement[] };
@@ -92,7 +100,7 @@ const Displacements: FC = () => {
           justifyContent: 'flex-start',
         }}
       >
-        <Dialog
+        <DynamicDialog
           title={PAGE_MESSAGES.DISPLACEMENT.DIALOG.CREATE.TITLE}
           description={PAGE_MESSAGES.DISPLACEMENT.DIALOG.CREATE.SUBTITLE}
           isOpen={open}

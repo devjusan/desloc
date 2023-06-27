@@ -3,15 +3,23 @@ import { clientService, toastService } from '@/src/services';
 import { GetServerSideProps } from 'next';
 import { FC, SetStateAction, useState } from 'react';
 import { Client } from '../types/clients';
-import Dialog from '../components/portals/dialog';
 import { PAGE_MESSAGES } from '../config/messages/pages';
-import { Button } from '@mui/material';
+import { Button, CircularProgress } from '@mui/material';
 import Input from '../components/ui/input';
 import { messages } from '../config/messages/general';
-import { isEqual } from 'lodash';
+import isEqual from 'lodash/isEqual';
 import { mutate } from 'swr';
 import { clientFormSchema } from '../utils/form-schema.utils';
 import useForm from '../hooks/useForm';
+import dynamic from 'next/dynamic';
+
+const DynamicDialog = dynamic(() => import('@/src/components/portals/dialog'), {
+  loading: () => (
+    <PageContainer styles={{ alignItems: 'center' }}>
+      <CircularProgress />
+    </PageContainer>
+  ),
+});
 
 const FCClient: FC<{ client: Client }> = ({ client }) => {
   const { state, errors, isValid, onChange, setInitialErrorsState, setState } =
@@ -52,7 +60,7 @@ const FCClient: FC<{ client: Client }> = ({ client }) => {
     <PageContainer
       styles={{ flexDirection: 'column', gap: '2rem', alignItems: 'center' }}
     >
-      <Dialog
+      <DynamicDialog
         title={PAGE_MESSAGES.CLIENT.DIALOG.EDIT.TITLE(state.nome)}
         description={PAGE_MESSAGES.CLIENT.DIALOG.EDIT.SUBTITLE}
         isOpen={open}

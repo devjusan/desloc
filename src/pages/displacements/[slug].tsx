@@ -1,4 +1,3 @@
-import Dialog from '@/src/components/portals/dialog';
 import DisplacementOptionsList from '@/src/components/ui/displacement-options-list';
 import Input from '@/src/components/ui/input';
 import { messages } from '@/src/config/messages/general';
@@ -10,11 +9,20 @@ import { Displacement } from '@/src/types/displacements';
 import { displacementFormSchema } from '@/src/utils/form-schema.utils';
 import { isDisplacement, uniqDisplacementInput } from '@/src/utils/form.utils';
 import { formatDate } from '@/src/utils/formatter.utils';
-import { Button } from '@mui/material';
-import { isEqual } from 'lodash';
+import { Button, CircularProgress } from '@mui/material';
+import isEqual from 'lodash/isEqual';
 import { GetServerSideProps } from 'next';
+import dynamic from 'next/dynamic';
 import { FC, SetStateAction, useState } from 'react';
 import { mutate } from 'swr';
+
+const DynamicDialog = dynamic(() => import('@/src/components/portals/dialog'), {
+  loading: () => (
+    <PageContainer styles={{ alignItems: 'center' }}>
+      <CircularProgress />
+    </PageContainer>
+  ),
+});
 
 const FCDisplacements: FC<{ displacement: Displacement }> = ({
   displacement,
@@ -58,7 +66,7 @@ const FCDisplacements: FC<{ displacement: Displacement }> = ({
     <PageContainer
       styles={{ flexDirection: 'column', gap: '1rem', alignItems: 'center' }}
     >
-      <Dialog
+      <DynamicDialog
         title={PAGE_MESSAGES.DISPLACEMENT.DIALOG.EDIT.TITLE(state.motivo)}
         description={PAGE_MESSAGES.DISPLACEMENT.DIALOG.EDIT.SUBTITLE}
         isOpen={open}

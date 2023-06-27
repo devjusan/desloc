@@ -1,7 +1,6 @@
 import { GetServerSideProps } from 'next';
 import { FC, SetStateAction, useState } from 'react';
 import { mutate } from 'swr';
-import Dialog from '@/src/components/portals/dialog';
 import Input from '@/src/components/ui/input';
 import { messages } from '@/src/config/messages/general';
 import { PAGE_MESSAGES } from '@/src/config/messages/pages';
@@ -11,8 +10,17 @@ import { driversService, toastService } from '@/src/services';
 import { Driver } from '@/src/types/drivers';
 import { driverFormSchema } from '@/src/utils/form-schema.utils';
 import { formatDate } from '@/src/utils/formatter.utils';
-import { Button } from '@mui/material';
-import { isEqual } from 'lodash';
+import { Button, CircularProgress } from '@mui/material';
+import isEqual from 'lodash/isEqual';
+import dynamic from 'next/dynamic';
+
+const DynamicDialog = dynamic(() => import('@/src/components/portals/dialog'), {
+  loading: () => (
+    <PageContainer styles={{ alignItems: 'center' }}>
+      <CircularProgress />
+    </PageContainer>
+  ),
+});
 
 const FCDriver: FC<{ driver: Driver }> = ({ driver }) => {
   const { state, errors, isValid, onChange, setInitialErrorsState, setState } =
@@ -54,7 +62,7 @@ const FCDriver: FC<{ driver: Driver }> = ({ driver }) => {
     <PageContainer
       styles={{ flexDirection: 'column', gap: '2rem', alignItems: 'center' }}
     >
-      <Dialog
+      <DynamicDialog
         title={PAGE_MESSAGES.DRIVER.DIALOG.EDIT.TITLE(state.nome)}
         description={PAGE_MESSAGES.DRIVER.DIALOG.EDIT.SUBTITLE}
         isOpen={open}

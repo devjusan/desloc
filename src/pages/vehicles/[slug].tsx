@@ -1,4 +1,3 @@
-import Dialog from '@/src/components/portals/dialog';
 import Input from '@/src/components/ui/input';
 import { messages } from '@/src/config/messages/general';
 import { PAGE_MESSAGES } from '@/src/config/messages/pages';
@@ -8,11 +7,20 @@ import { toastService, vehicleService } from '@/src/services';
 import { Vehicle } from '@/src/types/vehicles';
 import { vehicleFormSchema } from '@/src/utils/form-schema.utils';
 import { formatDate } from '@/src/utils/formatter.utils';
-import { Button } from '@mui/material';
-import { isEqual } from 'lodash';
+import { Button, CircularProgress } from '@mui/material';
+import isEqual from 'lodash/isEqual';
 import { GetServerSideProps } from 'next';
+import dynamic from 'next/dynamic';
 import { FC, SetStateAction, useState } from 'react';
 import { mutate } from 'swr';
+
+const DynamicDialog = dynamic(() => import('@/src/components/portals/dialog'), {
+  loading: () => (
+    <PageContainer styles={{ alignItems: 'center' }}>
+      <CircularProgress />
+    </PageContainer>
+  ),
+});
 
 const FCVehicle: FC<{ vehicle: Vehicle }> = ({ vehicle }) => {
   const { state, errors, isValid, onChange, setInitialErrorsState, setState } =
@@ -54,7 +62,7 @@ const FCVehicle: FC<{ vehicle: Vehicle }> = ({ vehicle }) => {
     <PageContainer
       styles={{ flexDirection: 'column', gap: '2rem', alignItems: 'center' }}
     >
-      <Dialog
+      <DynamicDialog
         title={PAGE_MESSAGES.VEHICLE.DIALOG.EDIT.TITLE(state.placa)}
         description={PAGE_MESSAGES.VEHICLE.DIALOG.EDIT.SUBTITLE}
         isOpen={open}
